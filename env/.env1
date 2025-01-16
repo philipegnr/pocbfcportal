@@ -1,0 +1,3 @@
+destinations='[{"name":"SAP_S03_SHIP_COST","url":"https://SAP_S03_SHIP_COST.dest","proxyHost":"http://127.0.0.1","proxyPort":"8887"}]'
+cds_requires='{"ZPSLE_BFC_VENDOR_PORTAL_SRV":{"impl":"@sap/cds/libx/_runtime/remote/Service.js","external":true,"kind":"odata-v2","model":"srv/external/ZPSLE_BFC_VENDOR_PORTAL_SRV","credentials":{"destination":"SAP_S03_SHIP_COST","path":"/sap/opu/odata/sap/ZPSLE_BFC_VENDOR_PORTAL_SRV"}},"auth":{"strategy":"dummy","kind":"dummy"},"messaging":{"kind":"local-messaging"}}'
+VCAP_SERVICES='{}'

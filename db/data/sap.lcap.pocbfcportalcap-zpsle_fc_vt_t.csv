@@ -1,0 +1,23 @@
+VEHICLE_TYPE,VEHICLE_DESC
+BATEDOR,Batedor
+CAEXTEMA30,Carreta Extensiva Especial > 30m
+CAEXTEME30,Carreta Extensiva Especial < 30m
+CAMBI08,Caminhão Bitruck 8 m (Materiais sensíveis)
+CAMIBAU,Caminhão Bau
+CAMIBI11,Caminhão Bitruck 11 m (Materiais sensíveis)
+CAMIMUNC,Caminhão Munck
+CAMITCPES,Caminhão Toco Pesado
+CAMITOCO,Caminhão Toco
+CAMITRPES,Caminhão Truck Pesado
+CAMITRUC,Caminhão Truck
+CARRECOM,Carreta Comum
+CARREEXT18,Carreta Extensiva 18 m
+CARREEXT28,Carreta Extensiva 28 m
+PICKUP,Pickup
+PRANAMPNEU,Prancha com amortecimento pneumático
+PRANCOMUM,Prancha Comum
+PRANELMA3M,Prancha Especial Larg (Materiais > 3m)
+PRANESPEC,Prancha Especial
+PRANPES,Prancha Pesada
+PRANSPES,Prancha Super Pesada
+VUC,Veículo Urbano de Carga

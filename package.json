@@ -1,0 +1,50 @@
+{
+  "name": "pocbfcportalcap",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": "^20"
+  },
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^8",
+    "express": "^4",
+    "rimraf": "^6.0.1",
+    "@cap-js/hana": "^1",
+    "@sap/xssec": "^4"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^1.7.8",
+    "@sap/cds-dk": "^8.6.1",
+    "@sap/ux-specification": "1.124.7",
+    "sqlite3": "^5.1.7"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "watch-bfcportal": "cds watch --open bfcportal/webapp/index.html?sap-ui-xx-viewCache=false",
+    "build": "rimraf resources mta_archives && mbt build --mtar pocbfcportalcap",
+    "deploy": "cf deploy mta_archives/pocbfcportalcap.mtar --retries 1"
+  },
+  "cds": {
+    "features": {
+      "localized": true
+    },
+    "requires": {
+      "destinations": true,
+      "html5-repo": true,
+      "workzone": true,
+      "[production]": {
+        "db": "hana",
+        "auth": "xsuaa"
+      }
+    },
+    "sql": {
+      "native_hana_associations": false
+    }
+  },
+  "sapux": [
+    "app/bfcportal"
+  ]
+}

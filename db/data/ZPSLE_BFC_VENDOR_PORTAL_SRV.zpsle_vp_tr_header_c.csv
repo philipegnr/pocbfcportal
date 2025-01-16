@@ -1,0 +1,1 @@
+Trnum,Carrier,Segment,CargoType,CargoTypeDesc,DeparturePoint,DeparturePointDesc,DestinationPoint,DestinationPointDesc,DepartureAddress,DestinationAddress,CollectionTimestamp,DeliveryTimestamp,CreationTimestamp,Status,StatusDesc,StatusState,NodeState

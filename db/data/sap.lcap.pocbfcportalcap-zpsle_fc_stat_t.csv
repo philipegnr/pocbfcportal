@@ -1,0 +1,9 @@
+STATUS,STATUS_DESC
+CANC,Cancelled
+CAR_APP,Accepted
+CAR_REJ,Rejected
+CAR_VAL,Pending of approval
+COMPL,Delivery confirmed
+LOG_VAL,Logistics validation
+NEW,Draft
+ORDER,Transport ordered

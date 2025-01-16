@@ -1,0 +1,110 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "shell",
+      "label": "cds watch",
+      "command": "cds",
+      "args": [
+        "watch"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "type": "shell",
+      "label": "cds serve",
+      "command": "cds",
+      "args": [
+        "serve",
+        "--with-mocks",
+        "--in-memory?"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "checkPort4004",
+      "type": "shell",
+      "command": "if lsof -i :4004 >/dev/null 2>&1; then echo ' A debugger has been started!';exit 1; else exit 0; fi",
+      "presentation": {
+        "echo": false,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "npm-install",
+      "type": "process",
+      "command": "npm",
+      "args": [
+        "install"
+      ],
+      "dependsOn": [
+        "checkPort4004"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/"
+      }
+    },
+    {
+      "label": "BuildMDK",
+      "type": "process",
+      "command": "npx",
+      "args": [
+        "mdk",
+        "build",
+        "--target",
+        "module",
+        "--ui5",
+        "--recursive"
+      ],
+      "dependsOn": [
+        "npm-install"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/"
+      }
+    },
+    {
+      "label": "dev-project-cap",
+      "type": "process",
+      "command": "npx",
+      "args": [
+        "node",
+        "-e",
+        "console.log(\"prelaunch task returns OK\")"
+      ],
+      "dependsOn": [
+        "npm-install"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/"
+      }
+    },
+    {
+      "type": "build.mta",
+      "label": "Build ",
+      "taskType": "Build",
+      "projectPath": "/home/user/projects/pocbfcportalcap",
+      "extensions": []
+    },
+    {
+      "type": "deploy.mta.cf",
+      "label": "DeployProject",
+      "taskType": "Deploy",
+      "mtarPath": "/home/user/projects/pocbfcportalcap/mta_archives/pocbfcportalcap_0.0.1.mtar",
+      "extensions": [],
+      "dependsOn": [
+        "Build "
+      ],
+      "cfTarget": "cf",
+      "cfEndpoint": "https://api.cf.us10-001.hana.ondemand.com",
+      "cfOrg": "9949bcdctrial",
+      "cfSpace": "dev"
+    }
+  ]
+}
