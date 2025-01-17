@@ -4,10 +4,10 @@
   "description": "A simple CAP project.",
   "repository": "<Add your repository here>",
   "license": "UNLICENSED",
-  "engines": {
-    "node": "^20"
-  },
   "private": true,
+  "engines": {
+    "npm": "10.7.0"
+  },
   "dependencies": {
     "@sap/cds": "^8",
     "express": "^4",
