@@ -5,7 +5,7 @@
     {
       "source": "^/?odata/(.*)$",
       "target": "/odata/$1",
-      "destination": "pocbfcportalcap-srv-api",
+      "destination": "pocbfcportalcap-srv",
       "csrfProtection": true,
       "authenticationType": "xsuaa"
     },
