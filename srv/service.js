@@ -1,4 +1,5 @@
 const cds = require('@sap/cds');
+const { json } = require('@sap/cds/lib/compile/parse');
 const { UUID } = require('@sap/cds/lib/core/classes');
 
 class ProcessorService extends cds.ApplicationService {
@@ -76,7 +77,7 @@ class AppData {
   }
 
   async createTrStatus(newStatus, req, that) {
-    console.log("Passnado pelo createTrStatus");
+    console.log("Passando pelo createTrStatus");
     const { TrCurrentStatus, zpsle_tr_s_t } = that.service.entities;
     const tx = cds.transaction(req);
     const currentStatus = await tx.run(
@@ -91,18 +92,27 @@ class AppData {
       USER_ID: cds.context.user,
       TIMESTAMP: cds.context.timestamp
     };
+    console.log("New Status Record to be inserted: " + JSON.stringify(newStatusRecord));
     await tx.run(INSERT.into(zpsle_tr_s_t).entries(newStatusRecord));
     switch (newStatus) {
       case AppConstants.STATUS_ACCEPTED:
+        console.log('TR Accepted successfully');
         req.notify('STATUS_ACCEPTED_SUCCESS', [req.params[0].Trnum]);
         break;
       case AppConstants.STATUS_REJECTED:
+        console.log('TR Rejected successfully');
         req.notify('STATUS_REJECTED_SUCCESS', [req.params[0].Trnum]);
         break;
       case AppConstants.STATUS_DELIVERY_CONFIRMED:
+        console.log('Delivery confirmed successfully');
         req.notify('STATUS_DELIVERY_CONFIRMED_SUCCESS', [req.params[0].Trnum]);
         break;
       default:
+        console.log('None new valid status has been found');
+        req.error({
+          message: 'None new valid status has been found',
+          status: 418
+        })
         break;
     }
   }
