@@ -42,6 +42,7 @@ class AppHandler {
   }
 
   async setTrAccepted(req) {
+    console.log("Passando pelo setTrAccepted");
     if (await this.appValidation.validateTrStatusCreation(AppConstants.STATUS_ACCEPTED, req, this)) {
       await this.appValidation.validateTrAcceptance(req, this);
       await this.appData.createTrStatus(AppConstants.STATUS_ACCEPTED, req, this);
@@ -75,6 +76,7 @@ class AppData {
   }
 
   async createTrStatus(newStatus, req, that) {
+    console.log("Passnado pelo createTrStatus");
     const { TrCurrentStatus, zpsle_tr_s_t } = that.service.entities;
     const tx = cds.transaction(req);
     const currentStatus = await tx.run(
@@ -201,6 +203,7 @@ class AppValidation {
   }
 
   async validateTrAcceptance(req, that) {
+    console.log("Passando pelo validateTrAcceptance");
     await this.validateCarrierRoute(req, that);
     await this.validateCarrierFleet(req, that);
   }
@@ -231,6 +234,7 @@ class AppValidation {
   }
 
   async validateCarrierRoute(req, that) {
+    console.log("Passando pelo validateCarrierRoute");
     const tx = cds.transaction(req);
     const { TransportRequisition, CarrierRoute } = that.service.entities;
     const routes = await tx.run(
@@ -316,6 +320,7 @@ class AppValidation {
   }
 
   async validateCarrierFleet(req, that) {
+    console.log("Passando pelo validateCarrierFleet");
     const tx = cds.transaction(req);
     const { CarrierFleet } = that.service.entities;
     const fleet = await tx.run(
@@ -333,6 +338,7 @@ class AppValidation {
   }
 
   async validateTrStatusCreation(newStatus, req, that) {
+    console.log("Passando pelo validateTrStatusCreation");
     let valid = false;
     const { TrCurrentStatus } = that.service.entities;
     const tx = cds.transaction(req);
