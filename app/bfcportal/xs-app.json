@@ -24,7 +24,7 @@
     {
       "source": "^(.*)$",
       "target": "$1",
-      "service": "html5-apps-repo-rt",
+      "service": "pocbfcportalcap-html5-repo-host",
       "authenticationType": "xsuaa"
     }
   ]
