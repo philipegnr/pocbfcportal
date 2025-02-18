@@ -333,8 +333,8 @@ entity CarrierFleet               as
 
 entity VehicleType                as
     select from zpsle_fc_vt_t {
-        key VEHICLE_TYPE             as VehicleType,
-            VEHICLE_DESC             as VehicleDesc
+        key VEHICLE_TYPE as VehicleType,
+            VEHICLE_DESC as VehicleDesc
     }
 
 /********************************************************************************
@@ -474,6 +474,7 @@ entity zpsle_tr_s_t {
         STATUS      : String(10);
         REASON_TEXT : String(120);
         USER_ID     : String(12);
+        //CF_USER_ID  : String(220);
         TIMESTAMP   : Timestamp;
 }
 
@@ -495,8 +496,8 @@ entity zpsle_fc_stat_t {
 }
 
 entity zpsle_fc_vt_t {
-    key VEHICLE_TYPE             : String(10);
-        VEHICLE_DESC             : String(50);
+    key VEHICLE_TYPE : String(10);
+        VEHICLE_DESC : String(50);
 }
 
 entity zpsle_tr_ch_t {
