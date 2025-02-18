@@ -43,7 +43,6 @@ class AppHandler {
   }
 
   async setTrAccepted(req) {
-    console.log("Passando pelo setTrAccepted");
     if (await this.appValidation.validateTrStatusCreation(AppConstants.STATUS_ACCEPTED, req, this)) {
       await this.appValidation.validateTrAcceptance(req, this);
       await this.appData.createTrStatus(AppConstants.STATUS_ACCEPTED, req, this);
@@ -77,7 +76,6 @@ class AppData {
   }
 
   async createTrStatus(newStatus, req, that) {
-    console.log("Passando pelo createTrStatus");
     const { TrCurrentStatus, zpsle_tr_s_t } = that.service.entities;
     const tx = cds.transaction(req);
     const currentStatus = await tx.run(
@@ -92,23 +90,18 @@ class AppData {
       USER_ID: 'VENDOR',
       TIMESTAMP: cds.context.timestamp
     };
-    console.log("New Status Record to be inserted: " + JSON.stringify(newStatusRecord));
     await tx.run(INSERT.into(zpsle_tr_s_t).entries(newStatusRecord));
     switch (newStatus) {
       case AppConstants.STATUS_ACCEPTED:
-        console.log('TR Accepted successfully');
         req.notify('STATUS_ACCEPTED_SUCCESS', [req.params[0].Trnum]);
         break;
       case AppConstants.STATUS_REJECTED:
-        console.log('TR Rejected successfully');
         req.notify('STATUS_REJECTED_SUCCESS', [req.params[0].Trnum]);
         break;
       case AppConstants.STATUS_DELIVERY_CONFIRMED:
-        console.log('Delivery confirmed successfully');
         req.notify('STATUS_DELIVERY_CONFIRMED_SUCCESS', [req.params[0].Trnum]);
         break;
       default:
-        console.log('None new valid status has been found');
         req.error({
           message: 'None new valid status has been found',
           status: 418
@@ -213,7 +206,6 @@ class AppValidation {
   }
 
   async validateTrAcceptance(req, that) {
-    console.log("Passando pelo validateTrAcceptance");
     await this.validateCarrierRoute(req, that);
     await this.validateCarrierFleet(req, that);
   }
@@ -244,7 +236,6 @@ class AppValidation {
   }
 
   async validateCarrierRoute(req, that) {
-    console.log("Passando pelo validateCarrierRoute");
     const tx = cds.transaction(req);
     const { TransportRequisition, CarrierRoute } = that.service.entities;
     const routes = await tx.run(
@@ -330,7 +321,6 @@ class AppValidation {
   }
 
   async validateCarrierFleet(req, that) {
-    console.log("Passando pelo validateCarrierFleet");
     const tx = cds.transaction(req);
     const { CarrierFleet } = that.service.entities;
     const fleet = await tx.run(
@@ -348,7 +338,6 @@ class AppValidation {
   }
 
   async validateTrStatusCreation(newStatus, req, that) {
-    console.log("Passando pelo validateTrStatusCreation");
     let valid = false;
     const { TrCurrentStatus } = that.service.entities;
     const tx = cds.transaction(req);

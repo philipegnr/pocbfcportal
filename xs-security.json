@@ -15,10 +15,5 @@
       ],
       "attribute-references": []
     }
-  ],
-  "oauth2-configuration": {
-    "redirect-uris": [
-      "https://equinor-sbx-cf-aws-application-p2p-pocbfcportalcap-srv.cfapps.eu10.hana.ondemand.com/"
-    ]
-  }
+  ]
 }
