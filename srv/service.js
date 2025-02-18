@@ -89,7 +89,7 @@ class AppData {
       TRNUM: req.params[0].Trnum,
       SEQ: newSequential,
       STATUS: newStatus,
-      USER_ID: cds.context.user,
+      USER_ID: 'VENDOR',
       TIMESTAMP: cds.context.timestamp
     };
     console.log("New Status Record to be inserted: " + JSON.stringify(newStatusRecord));
