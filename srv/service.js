@@ -77,7 +77,7 @@ class AppData {
   }
 
   async createTrStatus(newStatus, req, that) {
-    console.log("Passando pelo createTrStatus");
+    console.log("Passando pelo createTrStatus.");
     const { TrCurrentStatus, zpsle_tr_s_t } = that.service.entities;
     const tx = cds.transaction(req);
     const currentStatus = await tx.run(
