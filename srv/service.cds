@@ -1,6 +1,17 @@
 using {sap.lcap.pocbfcportalcap as my} from '../db/schema';
+using {ZPSLE_BFC_VENDOR_PORTAL_SRV as externalMy} from './external/ZPSLE_BFC_VENDOR_PORTAL_SRV';
+
+@path: '/service/ExternalProcessorService'
+service ExternalProcessorService {
+    @readonly
+    entity ExternalTranspRequisition as projection on externalMy.zpsle_vp_tr_header_c;
+}
+
+annotate ExternalProcessorService with @requires: ['authenticated-user'];
 
 service ProcessorService {
+
+    //entity ExternalTrHeader as projection on external.zpsle_vp_tr_header_c;
 
     annotate ProcessorService.TransportRequisition with @odata.draft.enabled;
 

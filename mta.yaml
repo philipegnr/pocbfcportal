@@ -30,6 +30,7 @@ modules:
       - name: pocbfcportalcap-db
       - name: pocbfcportalcap-auth
       - name: pocbfcportalcap-destination
+      - name: pocbfcportalcap-connectivity-service
 
   - name: pocbfcportalcap-db-deployer
     type: hdb
@@ -148,3 +149,9 @@ resources:
           name: srv-api # must be used in xs-app.json as well
           url: ~{srv-url}
           forwardAuthToken: true
+
+  - name: pocbfcportalcap-connectivity-service
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service-plan: lite
+      service: connectivity         

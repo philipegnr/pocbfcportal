@@ -1,4 +1,5 @@
 {
     "SAP HANA Database Explorer.ShowXsAdvancedConnections": true,
-    "SAP HANA Database Artifacts.lastSelectedTargetPath": "/home/user/projects/pocbfcportal/db/src"
+    "SAP HANA Database Artifacts.lastSelectedTargetPath": "/home/user/projects/pocbfcportal/db/src",
+    "breadcrumbs.enabled": true
 }
