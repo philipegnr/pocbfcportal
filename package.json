@@ -9,23 +9,30 @@
     "npm": "10.7.0"
   },
   "dependencies": {
-    "@sap/cds": "^8",
-    "express": "^4",
-    "rimraf": "^6.0.1",
     "@cap-js/hana": "^1",
-    "@sap/xssec": "^4"
+    "@sap-cloud-sdk/connectivity": "^3.26.1",
+    "@sap-cloud-sdk/http-client": "^3.26.1",
+    "@sap-cloud-sdk/resilience": "^3.26.1",
+    "@sap/cds": "^8",
+    "@sap/cds-odata-v2-adapter-proxy": "^1.9.7",
+    "@sap/xssec": "^4",
+    "express": "^4",
+    "rimraf": "^6.0.1"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^1.7.8",
     "@sap/cds-dk": "^8.6.1",
     "@sap/ux-specification": "1.124.7",
+    "mbt": "^1.2.29",
+    "rimraf": "^5.0.5",
     "sqlite3": "^5.1.7"
   },
   "scripts": {
     "start": "cds-serve",
     "watch-bfcportal": "cds watch --open bfcportal/webapp/index.html?sap-ui-xx-viewCache=false",
-    "build": "rimraf resources mta_archives && mbt build --mtar pocbfcportalcap",
-    "deploy": "cf deploy mta_archives/pocbfcportalcap.mtar --retries 1"
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+    "undeploy": "cf undeploy pocbfcportalcap --delete-services --delete-service-keys --delete-service-brokers"
   },
   "cds": {
     "features": {
@@ -37,7 +44,29 @@
       "workzone": true,
       "[production]": {
         "db": "hana",
-        "auth": "xsuaa"
+        "auth": "xsuaa",
+        "connectivity": true,
+        "destinations": true
+      },
+      "ZPSLE_BFC_VENDOR_PORTAL_SRV": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZPSLE_BFC_VENDOR_PORTAL_SRV",
+        "csrf": true,
+        "csrfInBatch": true,
+        "[production]": {
+          "credentials": {
+            "destination": "SAP_S03_SHIP_COST",
+            "path": "/sap/opu/odata/sap/ZPSLE_BFC_VENDOR_PORTAL_SRV",
+            "forwardAuthToken": true
+          }
+        },
+        "[hybrid]": {
+          "credentials": {
+            "destination": "SAP_S03_SHIP_COST",
+            "path": "/sap/opu/odata/sap/ZPSLE_BFC_VENDOR_PORTAL_SRV",
+            "forwardAuthToken": true
+          }
+        }
       }
     },
     "sql": {

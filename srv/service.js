@@ -1,6 +1,7 @@
 const cds = require('@sap/cds');
 const { json } = require('@sap/cds/lib/compile/parse');
 const { UUID } = require('@sap/cds/lib/core/classes');
+const { executeHttpRequest } = require("@sap-cloud-sdk/http-client");
 
 class ProcessorService extends cds.ApplicationService {
   init() {
@@ -23,6 +24,17 @@ class AppHandler {
     this.service = service;
     this.appData = new AppData(service);
     this.appValidation = new AppValidation(service);
+
+    //this.S4bupa = this.connectToS4bupa();
+    //this.remoteService = this.connectToremoteService();
+  }
+
+  async connectToS4bupa() {
+    return cds.connect.to('ZPSLE_BFC_VENDOR_PORTAL_SRV');
+  }
+
+  async connectToremoteService() {
+    return cds.connect.to('ExternalProcessorService');
   }
 
   async beforeReadTransportRequisition(req) {
@@ -58,10 +70,20 @@ class AppHandler {
   }
 
   async setTrDeliveryConfirmed(req) {
-    if (await validateTrStatusCreation(AppConstants.STATUS_DELIVERY_CONFIRMED, req, this)) {
-      await validateTrDeliveryConfirmation(req, this);
-      await this.appDataHandler.createTrStatus(AppConstants.STATUS_DELIVERY_CONFIRMED, req, this);
-    }
+
+    /* TEST CONNECTION ******************************************************** */
+
+    this.S4bupa = await this.connectToS4bupa();
+    this.remoteService = await this.connectToremoteService();
+
+    console.log("Passando pelo TESTE GET");
+    const { ExternalTranspRequisition } = this.remoteService.entities;
+    console.log("TESTE ExternalTranspRequisition: " + JSON.stringify(ExternalTranspRequisition));
+    const TranspReq = await this.S4bupa.run(SELECT.one().from(ExternalTranspRequisition).where({ Trnum: '1000000001' }));
+    console.log("RESULT TranspReq: " + JSON.stringify(TranspReq));
+
+    /* TEST CONNECTION ******************************************************** */
+
   }
 }
 
@@ -73,11 +95,10 @@ class AppData {
 
   async initializeCarrierResponse(req, that) {
     this.initializeCarrierHeader(req, that);
-    //this.initializeCarrierRoute(req, that);
   }
 
   async createTrStatus(newStatus, req, that) {
-    console.log("Passando pelo createTrStatus");
+    console.log("Passando pelo createTrStatus.");
     const { TrCurrentStatus, zpsle_tr_s_t } = that.service.entities;
     const tx = cds.transaction(req);
     const currentStatus = await tx.run(
