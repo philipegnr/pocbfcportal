@@ -31,6 +31,59 @@
                 <Property Name="Field" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="Field name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="System" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Logical system" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
             </EntityType>
+            <EntityType Name="CarrierResponse" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Trnum"/>
+                </Key>
+                <Property Name="Trnum" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Transport Requisiton" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Cost" Type="Edm.Decimal" Nullable="false" Precision="14" Scale="3" sap:unicode="false" sap:unit="CostCurrency" sap:label="Freight Cost" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CostCurrency" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Currency" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
+                <Property Name="Response" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Carrier Response" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Observat" Type="Edm.String" Nullable="false" MaxLength="1000" sap:unicode="false" sap:label="Observation" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Timestamp" Type="Edm.DateTime" Nullable="false" Precision="0" sap:unicode="false" sap:label="Accept/Reject on" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CostUnderContract" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Cost Under Contract" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ConfirmDelivery" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Confirm delivery" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DistanceCovered" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:unit="DistanceCoveredUom" sap:label="Distance Convered" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DistanceCoveredUom" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Base Unit" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/>
+                <Property Name="ShippingTimestamp" Type="Edm.DateTime" Nullable="false" Precision="0" sap:unicode="false" sap:label="Shipped on" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DeliveryTimestamp" Type="Edm.DateTime" Nullable="false" Precision="0" sap:unicode="false" sap:label="Delivered on" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ObservatDeliveryConfirm" Type="Edm.String" Nullable="false" MaxLength="1000" sap:unicode="false" sap:label="Observation" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TimestampDeliveryConfirm" Type="Edm.DateTime" Nullable="false" Precision="0" sap:unicode="false" sap:label="Dlvr.Confirmed on" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="HeaderToFleet" Relationship="ZPSLE_BFC_VENDOR_PORTAL_SRV.HeaderToFleet" FromRole="FromRole_HeaderToFleet" ToRole="ToRole_HeaderToFleet"/>
+                <NavigationProperty Name="HeaderToRoute" Relationship="ZPSLE_BFC_VENDOR_PORTAL_SRV.HeaderToRoute" FromRole="FromRole_HeaderToRoute" ToRole="ToRole_HeaderToRoute"/>
+            </EntityType>
+            <EntityType Name="CarrierResponseRoute" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Trnum"/>
+                    <PropertyRef Name="RouteSeq"/>
+                </Key>
+                <Property Name="Trnum" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Transport Requisiton" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="RouteSeq" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Sequence" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DeparturePoint" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Departure point" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DestinationPoint" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Dest.point" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Distance" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:unit="DistanceUom" sap:label="Route Distance" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DistanceUom" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Base Unit" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/>
+                <Property Name="RouteType" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Route Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="CarrierResponseFleet" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Trnum"/>
+                    <PropertyRef Name="VehicleType"/>
+                    <PropertyRef Name="LicensePlate"/>
+                    <PropertyRef Name="FleetSeq"/>
+                </Key>
+                <Property Name="Trnum" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Transport Requisiton" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="VehicleType" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Vehicle Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LicensePlate" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="License Plate" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="FleetSeq" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Carrier Fleet Seq" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DriverName" Type="Edm.String" Nullable="false" MaxLength="35" sap:unicode="false" sap:label="Driver" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DriverLicense" Type="Edm.String" Nullable="false" MaxLength="11" sap:unicode="false" sap:label="Driver License" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DriverCpf" Type="Edm.String" Nullable="false" MaxLength="11" sap:unicode="false" sap:label="CPF" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Quantity" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Vehicle Quantity" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Cost" Type="Edm.Decimal" Nullable="false" Precision="14" Scale="3" sap:unicode="false" sap:unit="CostCurrency" sap:label="Freight Cost" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CostCurrency" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Currency" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
+                <Property Name="VehicleId" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Vehicle ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
             <EntityType Name="zpsle_fc_vh_carr_cType" sap:label="Carrier Value Help" sap:content-version="1">
                 <Key>
                     <PropertyRef Name="CarrierId"/>
@@ -39,67 +92,6 @@
                 <Property Name="CarrierName" Type="Edm.String" MaxLength="35" sap:display-format="UpperCase"/>
                 <Property Name="Name" Type="Edm.String" MaxLength="35" sap:label="Carrier Name"/>
                 <Property Name="CarrierAlias" Type="Edm.String" MaxLength="20" sap:label="Carrier Alias Name"/>
-            </EntityType>
-            <EntityType Name="zpsle_vp_tr_item_cType" sap:label="Transport Requisition Item" sap:content-version="1">
-                <Key>
-                    <PropertyRef Name="Trnum"/>
-                    <PropertyRef Name="Tritem"/>
-                </Key>
-                <Property Name="Trnum" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Transport Requisiton"/>
-                <Property Name="Tritem" Type="Edm.String" Nullable="false" MaxLength="5" sap:display-format="NonNegative" sap:label="TR Item"/>
-                <Property Name="Material" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="Material" sap:value-list="standard"/>
-                <Property Name="MaterialDesc" Type="Edm.String" MaxLength="40" sap:label="Material Description"/>
-                <Property Name="Quantity" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unit="QuantityUom" sap:label="Quantity"/>
-                <Property Name="QuantityUom" Type="Edm.String" Nullable="false" MaxLength="3" sap:text="to_QuantityUomVH/UomDesc" sap:label="Base Unit of Measure" sap:creatable="false" sap:updatable="false" sap:value-list="standard" sap:semantics="unit-of-measure"/>
-                <Property Name="GrossWeight" Type="Edm.Decimal" Precision="15" Scale="3" sap:unit="GrossWeightUom" sap:label="Gross Weight"/>
-                <Property Name="GrossWeightUom" Type="Edm.String" MaxLength="3" sap:text="to_GrossWeightUomVH/UomDesc" sap:label="Unit of Weight" sap:creatable="false" sap:updatable="false" sap:value-list="standard" sap:semantics="unit-of-measure"/>
-                <Property Name="TotalGrossWeight" Type="Edm.Decimal" Precision="15" Scale="3" sap:unit="GrossWeightUom" sap:label="Total Gross Weight" sap:creatable="false" sap:updatable="false"/>
-                <Property Name="Lenght" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="DimensionsUom" sap:label="Length"/>
-                <Property Name="Width" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="DimensionsUom" sap:label="Width"/>
-                <Property Name="Height" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="DimensionsUom" sap:label="Height"/>
-                <Property Name="DimensionsUom" Type="Edm.String" MaxLength="3" sap:label="Unit of Dimension" sap:creatable="false" sap:updatable="false" sap:semantics="unit-of-measure"/>
-                <Property Name="TotalDimensions" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="TotalDimensionsUom" sap:label="Total Dimensions" sap:creatable="false" sap:updatable="false"/>
-                <Property Name="TotalDimensionsUom" Type="Edm.String" MaxLength="3" sap:label="Unit of Dimension" sap:creatable="false" sap:updatable="false" sap:semantics="unit-of-measure"/>
-                <Property Name="Dangerous" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="Dangerous"/>
-                <Property Name="Price" Type="Edm.Decimal" Nullable="false" Precision="14" Scale="3" sap:unit="PriceCurrency" sap:label="Value"/>
-                <Property Name="PriceCurrency" Type="Edm.String" MaxLength="5" sap:label="Price Currency" sap:creatable="false" sap:updatable="false" sap:semantics="currency-code"/>
-                <Property Name="TotalPrice" Type="Edm.Decimal" Precision="14" Scale="3" sap:unit="TotalPriceCurrency" sap:label="Total Value" sap:creatable="false" sap:updatable="false"/>
-                <Property Name="TotalPriceCurrency" Type="Edm.String" MaxLength="5" sap:label="Price Currency" sap:creatable="false" sap:updatable="false" sap:semantics="unit-of-measure"/>
-                <NavigationProperty Name="to_GrossWeightUomVH" Relationship="ZPSLE_BFC_VENDOR_PORTAL_SRV.assoc_4804FC04D13EDA76DB4742A190923807" FromRole="FromRole_assoc_4804FC04D13EDA76DB4742A190923807" ToRole="ToRole_assoc_4804FC04D13EDA76DB4742A190923807"/>
-                <NavigationProperty Name="to_MaterialVH" Relationship="ZPSLE_BFC_VENDOR_PORTAL_SRV.assoc_F7B62B4E95F89F43FA1A61C0F1D27BA4" FromRole="FromRole_assoc_F7B62B4E95F89F43FA1A61C0F1D27BA4" ToRole="ToRole_assoc_F7B62B4E95F89F43FA1A61C0F1D27BA4"/>
-                <NavigationProperty Name="to_QuantityUomVH" Relationship="ZPSLE_BFC_VENDOR_PORTAL_SRV.assoc_8D81DA1B815E516F1B4A7C1124C89E5E" FromRole="FromRole_assoc_8D81DA1B815E516F1B4A7C1124C89E5E" ToRole="ToRole_assoc_8D81DA1B815E516F1B4A7C1124C89E5E"/>
-            </EntityType>
-            <EntityType Name="zpsle_fc_vh_ctyp_cType" sap:label="Cargo Type Value Help" sap:content-version="1">
-                <Key>
-                    <PropertyRef Name="CargoType"/>
-                </Key>
-                <Property Name="CargoType" Type="Edm.String" Nullable="false" MaxLength="2" sap:display-format="UpperCase" sap:text="CargoTypeDesc" sap:label="Cargo Type"/>
-                <Property Name="CargoTypeDesc" Type="Edm.String" MaxLength="50" sap:label="Cargo Type Desc."/>
-            </EntityType>
-            <EntityType Name="zpsle_fc_vh_mat_cType" sap:label="Material Value Help" sap:content-version="1">
-                <Key>
-                    <PropertyRef Name="Material"/>
-                </Key>
-                <Property Name="Material" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Material"/>
-                <Property Name="MaterialDesc" Type="Edm.String" MaxLength="40" sap:label="Material Description"/>
-                <Property Name="MaterialType" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Material Type"/>
-                <Property Name="MaterialGroup" Type="Edm.String" MaxLength="9" sap:display-format="UpperCase" sap:label="Material Group"/>
-            </EntityType>
-            <EntityType Name="zpsle_fc_vh_point_cType" sap:label="Point Value Help" sap:content-version="1">
-                <Key>
-                    <PropertyRef Name="Point"/>
-                </Key>
-                <Property Name="PointDesc" Type="Edm.String" MaxLength="50" sap:label="Connection Point"/>
-                <Property Name="City" Type="Edm.String" MaxLength="40" sap:label="City"/>
-                <Property Name="State" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Region"/>
-                <Property Name="Point" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:text="PointDesc" sap:label="Points"/>
-            </EntityType>
-            <EntityType Name="zpsle_fc_vh_segm_cType" sap:label="Segment Value Help" sap:content-version="1">
-                <Key>
-                    <PropertyRef Name="Segment"/>
-                </Key>
-                <Property Name="Segment" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:text="SegmentDesc" sap:label="Segment"/>
-                <Property Name="SegmentDesc" Type="Edm.String" MaxLength="30" sap:label="Segment Description"/>
             </EntityType>
             <EntityType Name="zpsle_fc_vh_stat_cType" sap:label="Status Value Help" sap:content-version="1">
                 <Key>
@@ -140,6 +132,7 @@
                 <Property Name="CollectionTimestamp" Type="Edm.DateTimeOffset" Precision="0" sap:label="Estimated Shipping"/>
                 <Property Name="DeliveryTimestamp" Type="Edm.DateTimeOffset" Precision="0" sap:label="Estimated Delivery"/>
                 <Property Name="CreationTimestamp" Type="Edm.DateTimeOffset" Precision="0" sap:label="Created On"/>
+                <Property Name="SentToCarrierTimestamp" Type="Edm.DateTimeOffset" Precision="0" sap:label="Time Stamp"/>
                 <Property Name="Status" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:text="StatusDesc" sap:label="Status" sap:value-list="standard"/>
                 <Property Name="StatusDesc" Type="Edm.String" MaxLength="30" sap:label="Status Description"/>
                 <Property Name="StatusState" Type="Edm.String" MaxLength="11" sap:display-format="UpperCase"/>
@@ -148,9 +141,150 @@
                 <NavigationProperty Name="to_CarrierVH" Relationship="ZPSLE_BFC_VENDOR_PORTAL_SRV.assoc_4E630402294FB45C748A58C84FC94328" FromRole="FromRole_assoc_4E630402294FB45C748A58C84FC94328" ToRole="ToRole_assoc_4E630402294FB45C748A58C84FC94328"/>
                 <NavigationProperty Name="to_DepartureVH" Relationship="ZPSLE_BFC_VENDOR_PORTAL_SRV.assoc_73A5C669B6781C960AA9496FA0031731" FromRole="FromRole_assoc_73A5C669B6781C960AA9496FA0031731" ToRole="ToRole_assoc_73A5C669B6781C960AA9496FA0031731"/>
                 <NavigationProperty Name="to_DestinationVH" Relationship="ZPSLE_BFC_VENDOR_PORTAL_SRV.assoc_39D1058E88AD5DD5DDA3D2F3125BE28C" FromRole="FromRole_assoc_39D1058E88AD5DD5DDA3D2F3125BE28C" ToRole="ToRole_assoc_39D1058E88AD5DD5DDA3D2F3125BE28C"/>
-                <NavigationProperty Name="to_Item" Relationship="ZPSLE_BFC_VENDOR_PORTAL_SRV.assoc_1C8FBD3AA8454205F69D52BDE0A64EE9" FromRole="FromRole_assoc_1C8FBD3AA8454205F69D52BDE0A64EE9" ToRole="ToRole_assoc_1C8FBD3AA8454205F69D52BDE0A64EE9"/>
                 <NavigationProperty Name="to_SegmentVH" Relationship="ZPSLE_BFC_VENDOR_PORTAL_SRV.assoc_B6E5CB11CEC0FA68AA767A3B7F57057C" FromRole="FromRole_assoc_B6E5CB11CEC0FA68AA767A3B7F57057C" ToRole="ToRole_assoc_B6E5CB11CEC0FA68AA767A3B7F57057C"/>
                 <NavigationProperty Name="to_StatusVH" Relationship="ZPSLE_BFC_VENDOR_PORTAL_SRV.assoc_B99BD688E2E64923909D9A367B9CD89D" FromRole="FromRole_assoc_B99BD688E2E64923909D9A367B9CD89D" ToRole="ToRole_assoc_B99BD688E2E64923909D9A367B9CD89D"/>
+                <NavigationProperty Name="to_TrHeader" Relationship="ZPSLE_BFC_VENDOR_PORTAL_SRV.assoc_E528617FE04EDF3D1350EAA36D822F74" FromRole="FromRole_assoc_E528617FE04EDF3D1350EAA36D822F74" ToRole="ToRole_assoc_E528617FE04EDF3D1350EAA36D822F74"/>
+                <NavigationProperty Name="to_TrItem" Relationship="ZPSLE_BFC_VENDOR_PORTAL_SRV.assoc_BDEF1C300C5A816CB30BE3F7BD08B55B" FromRole="FromRole_assoc_BDEF1C300C5A816CB30BE3F7BD08B55B" ToRole="ToRole_assoc_BDEF1C300C5A816CB30BE3F7BD08B55B"/>
+                <NavigationProperty Name="to_TrStatus" Relationship="ZPSLE_BFC_VENDOR_PORTAL_SRV.assoc_55F63F6D575BD333E9E87266EDCD4ABD" FromRole="FromRole_assoc_55F63F6D575BD333E9E87266EDCD4ABD" ToRole="ToRole_assoc_55F63F6D575BD333E9E87266EDCD4ABD"/>
+            </EntityType>
+            <EntityType Name="zpsle_vp_tr_h_cType" sap:label="Transport Requisition Header" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="trnum"/>
+                </Key>
+                <Property Name="wbs" Type="Edm.String" MaxLength="24" sap:display-format="UpperCase" sap:label="WBS"/>
+                <Property Name="cargo_type" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Cargo Type"/>
+                <Property Name="company" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Company"/>
+                <Property Name="plant" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Plant"/>
+                <Property Name="departure_point" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Departure Point"/>
+                <Property Name="destination_point" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Destination Point"/>
+                <Property Name="departure_address" Type="Edm.String" MaxLength="200" sap:label="Departure Address"/>
+                <Property Name="destination_address" Type="Edm.String" MaxLength="200" sap:label="Destination Address"/>
+                <Property Name="requested_for" Type="Edm.String" MaxLength="30" sap:label="Requested For"/>
+                <Property Name="collection_timestamp" Type="Edm.DateTimeOffset" Precision="0" sap:label="Estimated Shipping"/>
+                <Property Name="delivery_timestamp" Type="Edm.DateTimeOffset" Precision="0" sap:label="Estimated Delivery"/>
+                <Property Name="observat" Type="Edm.String" MaxLength="1000" sap:label="Observation"/>
+                <Property Name="automatically_created" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="Automatic.Created"/>
+                <Property Name="trcop" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="TR Copy"/>
+                <Property Name="trcop_new_carrier" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="Define New Carrier"/>
+                <Property Name="creation_user" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:label="Created By"/>
+                <Property Name="creation_timestamp" Type="Edm.DateTimeOffset" Precision="0" sap:label="Created On"/>
+                <Property Name="last_modif_user" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:label="Last Modified By"/>
+                <Property Name="last_modif_timestamp" Type="Edm.DateTimeOffset" Precision="0" sap:label="Last Modified On"/>
+                <Property Name="draft" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="Draft"/>
+                <Property Name="wbs_internal" Type="Edm.String" MaxLength="24" sap:display-format="NonNegative" sap:label="WBS Element"/>
+                <Property Name="canceled_with_costs" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="Canceled with costs"/>
+                <Property Name="carrier_defined_by" Type="Edm.String" MaxLength="4" sap:display-format="NonNegative" sap:label="Carrier Definition T"/>
+                <Property Name="ebenumber" Type="Edm.String" MaxLength="50" sap:label="EBE"/>
+                <Property Name="travel_number" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Travel Number"/>
+                <Property Name="trnum" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Transport Requisiton"/>
+                <Property Name="trtyp" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="TR Type"/>
+                <Property Name="carrier" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Carrier"/>
+                <Property Name="segment" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Segment"/>
+                <Property Name="project" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Project"/>
+            </EntityType>
+            <EntityType Name="zpsle_fc_vh_ctyp_cType" sap:label="Cargo Type Value Help" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="CargoType"/>
+                </Key>
+                <Property Name="CargoType" Type="Edm.String" Nullable="false" MaxLength="2" sap:display-format="UpperCase" sap:text="CargoTypeDesc" sap:label="Cargo Type"/>
+                <Property Name="CargoTypeDesc" Type="Edm.String" MaxLength="50" sap:label="Cargo Type Desc."/>
+            </EntityType>
+            <EntityType Name="zpsle_vp_tr_item_cType" sap:label="Transport Requisition Item" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Trnum"/>
+                    <PropertyRef Name="Tritem"/>
+                </Key>
+                <Property Name="Trnum" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Transport Requisiton"/>
+                <Property Name="Tritem" Type="Edm.String" Nullable="false" MaxLength="5" sap:display-format="NonNegative" sap:label="TR Item"/>
+                <Property Name="Material" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="Material" sap:value-list="standard"/>
+                <Property Name="MaterialDesc" Type="Edm.String" MaxLength="40" sap:label="Material Description"/>
+                <Property Name="Quantity" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unit="QuantityUom" sap:label="Quantity"/>
+                <Property Name="QuantityUom" Type="Edm.String" Nullable="false" MaxLength="3" sap:text="to_QuantityUomVH/UomDesc" sap:label="Base Unit of Measure" sap:creatable="false" sap:updatable="false" sap:value-list="standard" sap:semantics="unit-of-measure"/>
+                <Property Name="GrossWeight" Type="Edm.Decimal" Precision="15" Scale="3" sap:unit="GrossWeightUom" sap:label="Gross Weight"/>
+                <Property Name="GrossWeightUom" Type="Edm.String" MaxLength="3" sap:text="to_GrossWeightUomVH/UomDesc" sap:label="Unit of Weight" sap:creatable="false" sap:updatable="false" sap:value-list="standard" sap:semantics="unit-of-measure"/>
+                <Property Name="TotalGrossWeight" Type="Edm.Decimal" Precision="15" Scale="3" sap:unit="GrossWeightUom" sap:label="Total Gross Weight" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="Lenght" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="DimensionsUom" sap:label="Length"/>
+                <Property Name="Width" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="DimensionsUom" sap:label="Width"/>
+                <Property Name="Height" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="DimensionsUom" sap:label="Height"/>
+                <Property Name="DimensionsUom" Type="Edm.String" MaxLength="3" sap:label="Unit of Dimension" sap:creatable="false" sap:updatable="false" sap:semantics="unit-of-measure"/>
+                <Property Name="TotalDimensions" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="TotalDimensionsUom" sap:label="Total Dimensions" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="TotalDimensionsUom" Type="Edm.String" MaxLength="3" sap:label="Unit of Dimension" sap:creatable="false" sap:updatable="false" sap:semantics="unit-of-measure"/>
+                <Property Name="Dangerous" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="Dangerous"/>
+                <Property Name="Price" Type="Edm.Decimal" Nullable="false" Precision="14" Scale="3" sap:unit="PriceCurrency" sap:label="Value"/>
+                <Property Name="PriceCurrency" Type="Edm.String" MaxLength="5" sap:label="Price Currency" sap:creatable="false" sap:updatable="false" sap:semantics="currency-code"/>
+                <Property Name="TotalPrice" Type="Edm.Decimal" Precision="14" Scale="3" sap:unit="TotalPriceCurrency" sap:label="Total Value" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="TotalPriceCurrency" Type="Edm.String" MaxLength="5" sap:label="Price Currency" sap:creatable="false" sap:updatable="false" sap:semantics="unit-of-measure"/>
+                <NavigationProperty Name="to_GrossWeightUomVH" Relationship="ZPSLE_BFC_VENDOR_PORTAL_SRV.assoc_4804FC04D13EDA76DB4742A190923807" FromRole="FromRole_assoc_4804FC04D13EDA76DB4742A190923807" ToRole="ToRole_assoc_4804FC04D13EDA76DB4742A190923807"/>
+                <NavigationProperty Name="to_MaterialVH" Relationship="ZPSLE_BFC_VENDOR_PORTAL_SRV.assoc_F7B62B4E95F89F43FA1A61C0F1D27BA4" FromRole="FromRole_assoc_F7B62B4E95F89F43FA1A61C0F1D27BA4" ToRole="ToRole_assoc_F7B62B4E95F89F43FA1A61C0F1D27BA4"/>
+                <NavigationProperty Name="to_QuantityUomVH" Relationship="ZPSLE_BFC_VENDOR_PORTAL_SRV.assoc_8D81DA1B815E516F1B4A7C1124C89E5E" FromRole="FromRole_assoc_8D81DA1B815E516F1B4A7C1124C89E5E" ToRole="ToRole_assoc_8D81DA1B815E516F1B4A7C1124C89E5E"/>
+            </EntityType>
+            <EntityType Name="zpsle_vp_tr_i_cType" sap:label="Transport Requisition Item" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="trnum"/>
+                    <PropertyRef Name="tritem"/>
+                </Key>
+                <Property Name="trnum" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Transport Requisiton"/>
+                <Property Name="tritem" Type="Edm.String" Nullable="false" MaxLength="5" sap:display-format="NonNegative" sap:label="TR Item"/>
+                <Property Name="material" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="Material"/>
+                <Property Name="material_desc" Type="Edm.String" MaxLength="40" sap:label="Material Description"/>
+                <Property Name="quantity" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="quantity_uom" sap:label="Quantity"/>
+                <Property Name="quantity_uom" Type="Edm.String" MaxLength="3" sap:label="Base Unit of Measure" sap:semantics="unit-of-measure"/>
+                <Property Name="gross_weight" Type="Edm.Decimal" Precision="15" Scale="3" sap:unit="gross_weight_uom" sap:label="Gross Weight"/>
+                <Property Name="gross_weight_uom" Type="Edm.String" MaxLength="3" sap:label="Unit of Weight" sap:semantics="unit-of-measure"/>
+                <Property Name="total_gross_weight" Type="Edm.Decimal" Precision="15" Scale="3" sap:unit="gross_weight_uom" sap:label="Total Gross Weight"/>
+                <Property Name="lenght" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="dimensions_uom" sap:label="Length"/>
+                <Property Name="width" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="dimensions_uom" sap:label="Width"/>
+                <Property Name="height" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="dimensions_uom" sap:label="Height"/>
+                <Property Name="dimensions_uom" Type="Edm.String" MaxLength="3" sap:label="Unit of Dimension" sap:semantics="unit-of-measure"/>
+                <Property Name="total_dimensions" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="total_dimensions_uom" sap:label="Total Dimensions"/>
+                <Property Name="total_dimensions_uom" Type="Edm.String" MaxLength="3" sap:label="Unit of Dimension" sap:semantics="unit-of-measure"/>
+                <Property Name="dangerous" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="Dangerous"/>
+                <Property Name="price" Type="Edm.Decimal" Precision="14" Scale="3" sap:unit="price_currency" sap:label="Value"/>
+                <Property Name="price_currency" Type="Edm.String" MaxLength="5" sap:label="Price Currency" sap:semantics="currency-code"/>
+                <Property Name="total_price" Type="Edm.Decimal" Precision="14" Scale="3" sap:unit="price_currency" sap:label="Total Value"/>
+                <Property Name="cancel" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="Cancelled"/>
+                <Property Name="creation_user" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:label="Created By"/>
+                <Property Name="creation_timestamp" Type="Edm.DateTimeOffset" Precision="0" sap:label="Created On"/>
+                <Property Name="last_modif_user" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:label="Last Modified By"/>
+                <Property Name="last_modif_timestamp" Type="Edm.DateTimeOffset" Precision="0" sap:label="Last Modified On"/>
+                <Property Name="draft" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="Draft"/>
+            </EntityType>
+            <EntityType Name="zpsle_vp_tr_s_cType" sap:label="Transport Requisition Status" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="trnum"/>
+                    <PropertyRef Name="seq"/>
+                </Key>
+                <Property Name="trnum" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Transport Requisiton"/>
+                <Property Name="seq" Type="Edm.String" Nullable="false" MaxLength="2" sap:display-format="NonNegative" sap:label="Status Sequence"/>
+                <Property Name="status" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Status"/>
+                <Property Name="reason_text" Type="Edm.String" MaxLength="120" sap:label="Reason"/>
+                <Property Name="user_id" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:label="User Name"/>
+                <Property Name="timestamp" Type="Edm.DateTimeOffset" Precision="0" sap:label="Time Stamp"/>
+            </EntityType>
+            <EntityType Name="zpsle_fc_vh_mat_cType" sap:label="Material Value Help" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Material"/>
+                </Key>
+                <Property Name="Material" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Material"/>
+                <Property Name="MaterialDesc" Type="Edm.String" MaxLength="40" sap:label="Material Description"/>
+                <Property Name="MaterialType" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Material Type"/>
+                <Property Name="MaterialGroup" Type="Edm.String" MaxLength="9" sap:display-format="UpperCase" sap:label="Material Group"/>
+            </EntityType>
+            <EntityType Name="zpsle_fc_vh_point_cType" sap:label="Point Value Help" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Point"/>
+                </Key>
+                <Property Name="Point" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:text="PointDesc" sap:label="Points"/>
+                <Property Name="PointDesc" Type="Edm.String" MaxLength="50" sap:label="Connection Point"/>
+                <Property Name="City" Type="Edm.String" MaxLength="40" sap:label="City"/>
+                <Property Name="State" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Region"/>
+            </EntityType>
+            <EntityType Name="zpsle_fc_vh_segm_cType" sap:label="Segment Value Help" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Segment"/>
+                </Key>
+                <Property Name="Segment" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:text="SegmentDesc" sap:label="Segment"/>
+                <Property Name="SegmentDesc" Type="Edm.String" MaxLength="30" sap:label="Segment Description"/>
             </EntityType>
             <Association Name="assoc_0F6E670B921DD7C0C97C0A145267106E" sap:content-version="1">
                 <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_header_cType" Multiplicity="1" Role="FromRole_assoc_0F6E670B921DD7C0C97C0A145267106E"/>
@@ -168,10 +302,6 @@
                 <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_header_cType" Multiplicity="1" Role="FromRole_assoc_39D1058E88AD5DD5DDA3D2F3125BE28C"/>
                 <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_fc_vh_point_cType" Multiplicity="*" Role="ToRole_assoc_39D1058E88AD5DD5DDA3D2F3125BE28C"/>
             </Association>
-            <Association Name="assoc_1C8FBD3AA8454205F69D52BDE0A64EE9" sap:content-version="1">
-                <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_header_cType" Multiplicity="1" Role="FromRole_assoc_1C8FBD3AA8454205F69D52BDE0A64EE9"/>
-                <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_item_cType" Multiplicity="*" Role="ToRole_assoc_1C8FBD3AA8454205F69D52BDE0A64EE9"/>
-            </Association>
             <Association Name="assoc_B6E5CB11CEC0FA68AA767A3B7F57057C" sap:content-version="1">
                 <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_header_cType" Multiplicity="1" Role="FromRole_assoc_B6E5CB11CEC0FA68AA767A3B7F57057C"/>
                 <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_fc_vh_segm_cType" Multiplicity="*" Role="ToRole_assoc_B6E5CB11CEC0FA68AA767A3B7F57057C"/>
@@ -179,6 +309,22 @@
             <Association Name="assoc_B99BD688E2E64923909D9A367B9CD89D" sap:content-version="1">
                 <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_header_cType" Multiplicity="1" Role="FromRole_assoc_B99BD688E2E64923909D9A367B9CD89D"/>
                 <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_fc_vh_stat_cType" Multiplicity="*" Role="ToRole_assoc_B99BD688E2E64923909D9A367B9CD89D"/>
+            </Association>
+            <Association Name="assoc_E528617FE04EDF3D1350EAA36D822F74" sap:content-version="1">
+                <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_header_cType" Multiplicity="1" Role="FromRole_assoc_E528617FE04EDF3D1350EAA36D822F74"/>
+                <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_h_cType" Multiplicity="*" Role="ToRole_assoc_E528617FE04EDF3D1350EAA36D822F74"/>
+            </Association>
+            <Association Name="assoc_BDEF1C300C5A816CB30BE3F7BD08B55B" sap:content-version="1">
+                <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_header_cType" Multiplicity="1" Role="FromRole_assoc_BDEF1C300C5A816CB30BE3F7BD08B55B"/>
+                <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_i_cType" Multiplicity="*" Role="ToRole_assoc_BDEF1C300C5A816CB30BE3F7BD08B55B"/>
+            </Association>
+            <Association Name="assoc_55F63F6D575BD333E9E87266EDCD4ABD" sap:content-version="1">
+                <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_header_cType" Multiplicity="1" Role="FromRole_assoc_55F63F6D575BD333E9E87266EDCD4ABD"/>
+                <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_s_cType" Multiplicity="*" Role="ToRole_assoc_55F63F6D575BD333E9E87266EDCD4ABD"/>
+            </Association>
+            <Association Name="assoc_4804FC04D13EDA76DB4742A190923807" sap:content-version="1">
+                <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_item_cType" Multiplicity="1" Role="FromRole_assoc_4804FC04D13EDA76DB4742A190923807"/>
+                <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_fc_vh_um_gw_cType" Multiplicity="*" Role="ToRole_assoc_4804FC04D13EDA76DB4742A190923807"/>
             </Association>
             <Association Name="assoc_F7B62B4E95F89F43FA1A61C0F1D27BA4" sap:content-version="1">
                 <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_item_cType" Multiplicity="1" Role="FromRole_assoc_F7B62B4E95F89F43FA1A61C0F1D27BA4"/>
@@ -188,29 +334,51 @@
                 <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_item_cType" Multiplicity="1" Role="FromRole_assoc_8D81DA1B815E516F1B4A7C1124C89E5E"/>
                 <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_fc_vh_um_qt_cType" Multiplicity="*" Role="ToRole_assoc_8D81DA1B815E516F1B4A7C1124C89E5E"/>
             </Association>
-            <Association Name="assoc_4804FC04D13EDA76DB4742A190923807" sap:content-version="1">
-                <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_item_cType" Multiplicity="1" Role="FromRole_assoc_4804FC04D13EDA76DB4742A190923807"/>
-                <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_fc_vh_um_gw_cType" Multiplicity="*" Role="ToRole_assoc_4804FC04D13EDA76DB4742A190923807"/>
+            <Association Name="HeaderToFleet" sap:content-version="1">
+                <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.CarrierResponse" Multiplicity="1" Role="FromRole_HeaderToFleet"/>
+                <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.CarrierResponseFleet" Multiplicity="*" Role="ToRole_HeaderToFleet"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_HeaderToFleet">
+                        <PropertyRef Name="Trnum"/>
+                    </Principal>
+                    <Dependent Role="ToRole_HeaderToFleet">
+                        <PropertyRef Name="Trnum"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="HeaderToRoute" sap:content-version="1">
+                <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.CarrierResponse" Multiplicity="1" Role="FromRole_HeaderToRoute"/>
+                <End Type="ZPSLE_BFC_VENDOR_PORTAL_SRV.CarrierResponseRoute" Multiplicity="*" Role="ToRole_HeaderToRoute"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_HeaderToRoute">
+                        <PropertyRef Name="Trnum"/>
+                    </Principal>
+                    <Dependent Role="ToRole_HeaderToRoute">
+                        <PropertyRef Name="Trnum"/>
+                    </Dependent>
+                </ReferentialConstraint>
             </Association>
             <EntityContainer Name="ZPSLE_BFC_VENDOR_PORTAL_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
-                <EntitySet Name="SetStatusResponseSet" EntityType="ZPSLE_BFC_VENDOR_PORTAL_SRV.SetStatusResponse" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
                 <EntitySet Name="zpsle_fc_vh_carr_c" EntityType="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_fc_vh_carr_cType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/>
-                <EntitySet Name="zpsle_vp_tr_item_c" EntityType="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_item_cType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
-                <EntitySet Name="zpsle_fc_vh_ctyp_c" EntityType="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_fc_vh_ctyp_cType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/>
-                <EntitySet Name="zpsle_fc_vh_mat_c" EntityType="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_fc_vh_mat_cType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/>
-                <EntitySet Name="zpsle_fc_vh_point_c" EntityType="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_fc_vh_point_cType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/>
-                <EntitySet Name="zpsle_fc_vh_segm_c" EntityType="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_fc_vh_segm_cType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/>
                 <EntitySet Name="zpsle_fc_vh_stat_c" EntityType="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_fc_vh_stat_cType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/>
                 <EntitySet Name="zpsle_fc_vh_um_gw_c" EntityType="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_fc_vh_um_gw_cType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/>
                 <EntitySet Name="zpsle_fc_vh_um_qt_c" EntityType="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_fc_vh_um_qt_cType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/>
                 <EntitySet Name="zpsle_vp_tr_header_c" EntityType="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_header_cType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/>
+                <EntitySet Name="zpsle_vp_tr_h_c" EntityType="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_h_cType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="zpsle_fc_vh_ctyp_c" EntityType="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_fc_vh_ctyp_cType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/>
+                <EntitySet Name="zpsle_vp_tr_item_c" EntityType="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_item_cType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="zpsle_vp_tr_i_c" EntityType="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_i_cType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="zpsle_vp_tr_s_c" EntityType="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_s_cType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+                <EntitySet Name="zpsle_fc_vh_mat_c" EntityType="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_fc_vh_mat_cType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/>
+                <EntitySet Name="zpsle_fc_vh_point_c" EntityType="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_fc_vh_point_cType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/>
+                <EntitySet Name="zpsle_fc_vh_segm_c" EntityType="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_fc_vh_segm_cType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/>
+                <EntitySet Name="SetStatusResponseSet" EntityType="ZPSLE_BFC_VENDOR_PORTAL_SRV.SetStatusResponse" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="CarrierResponseSet" EntityType="ZPSLE_BFC_VENDOR_PORTAL_SRV.CarrierResponse" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="CarrierResponseRouteSet" EntityType="ZPSLE_BFC_VENDOR_PORTAL_SRV.CarrierResponseRoute" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="CarrierResponseFleetSet" EntityType="ZPSLE_BFC_VENDOR_PORTAL_SRV.CarrierResponseFleet" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
                 <AssociationSet Name="assoc_4804FC04D13EDA76DB4742A190923807" Association="ZPSLE_BFC_VENDOR_PORTAL_SRV.assoc_4804FC04D13EDA76DB4742A190923807" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
                     <End EntitySet="zpsle_vp_tr_item_c" Role="FromRole_assoc_4804FC04D13EDA76DB4742A190923807"/>
                     <End EntitySet="zpsle_fc_vh_um_gw_c" Role="ToRole_assoc_4804FC04D13EDA76DB4742A190923807"/>
-                </AssociationSet>
-                <AssociationSet Name="assoc_1C8FBD3AA8454205F69D52BDE0A64EE9" Association="ZPSLE_BFC_VENDOR_PORTAL_SRV.assoc_1C8FBD3AA8454205F69D52BDE0A64EE9" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
-                    <End EntitySet="zpsle_vp_tr_header_c" Role="FromRole_assoc_1C8FBD3AA8454205F69D52BDE0A64EE9"/>
-                    <End EntitySet="zpsle_vp_tr_item_c" Role="ToRole_assoc_1C8FBD3AA8454205F69D52BDE0A64EE9"/>
                 </AssociationSet>
                 <AssociationSet Name="assoc_73A5C669B6781C960AA9496FA0031731" Association="ZPSLE_BFC_VENDOR_PORTAL_SRV.assoc_73A5C669B6781C960AA9496FA0031731" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
                     <End EntitySet="zpsle_vp_tr_header_c" Role="FromRole_assoc_73A5C669B6781C960AA9496FA0031731"/>
@@ -232,19 +400,108 @@
                     <End EntitySet="zpsle_vp_tr_header_c" Role="FromRole_assoc_B6E5CB11CEC0FA68AA767A3B7F57057C"/>
                     <End EntitySet="zpsle_fc_vh_segm_c" Role="ToRole_assoc_B6E5CB11CEC0FA68AA767A3B7F57057C"/>
                 </AssociationSet>
+                <AssociationSet Name="assoc_E528617FE04EDF3D1350EAA36D822F74" Association="ZPSLE_BFC_VENDOR_PORTAL_SRV.assoc_E528617FE04EDF3D1350EAA36D822F74" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="zpsle_vp_tr_header_c" Role="FromRole_assoc_E528617FE04EDF3D1350EAA36D822F74"/>
+                    <End EntitySet="zpsle_vp_tr_h_c" Role="ToRole_assoc_E528617FE04EDF3D1350EAA36D822F74"/>
+                </AssociationSet>
                 <AssociationSet Name="assoc_8D81DA1B815E516F1B4A7C1124C89E5E" Association="ZPSLE_BFC_VENDOR_PORTAL_SRV.assoc_8D81DA1B815E516F1B4A7C1124C89E5E" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
                     <End EntitySet="zpsle_vp_tr_item_c" Role="FromRole_assoc_8D81DA1B815E516F1B4A7C1124C89E5E"/>
                     <End EntitySet="zpsle_fc_vh_um_qt_c" Role="ToRole_assoc_8D81DA1B815E516F1B4A7C1124C89E5E"/>
                 </AssociationSet>
+                <AssociationSet Name="HeaderToFleetSet" Association="ZPSLE_BFC_VENDOR_PORTAL_SRV.HeaderToFleet" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="CarrierResponseSet" Role="FromRole_HeaderToFleet"/>
+                    <End EntitySet="CarrierResponseFleetSet" Role="ToRole_HeaderToFleet"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_55F63F6D575BD333E9E87266EDCD4ABD" Association="ZPSLE_BFC_VENDOR_PORTAL_SRV.assoc_55F63F6D575BD333E9E87266EDCD4ABD" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="zpsle_vp_tr_header_c" Role="FromRole_assoc_55F63F6D575BD333E9E87266EDCD4ABD"/>
+                    <End EntitySet="zpsle_vp_tr_s_c" Role="ToRole_assoc_55F63F6D575BD333E9E87266EDCD4ABD"/>
+                </AssociationSet>
                 <AssociationSet Name="assoc_4E630402294FB45C748A58C84FC94328" Association="ZPSLE_BFC_VENDOR_PORTAL_SRV.assoc_4E630402294FB45C748A58C84FC94328" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
                     <End EntitySet="zpsle_vp_tr_header_c" Role="FromRole_assoc_4E630402294FB45C748A58C84FC94328"/>
                     <End EntitySet="zpsle_fc_vh_carr_c" Role="ToRole_assoc_4E630402294FB45C748A58C84FC94328"/>
+                </AssociationSet>
+                <AssociationSet Name="assoc_BDEF1C300C5A816CB30BE3F7BD08B55B" Association="ZPSLE_BFC_VENDOR_PORTAL_SRV.assoc_BDEF1C300C5A816CB30BE3F7BD08B55B" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="zpsle_vp_tr_header_c" Role="FromRole_assoc_BDEF1C300C5A816CB30BE3F7BD08B55B"/>
+                    <End EntitySet="zpsle_vp_tr_i_c" Role="ToRole_assoc_BDEF1C300C5A816CB30BE3F7BD08B55B"/>
+                </AssociationSet>
+                <AssociationSet Name="HeaderToRouteSet" Association="ZPSLE_BFC_VENDOR_PORTAL_SRV.HeaderToRoute" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="CarrierResponseSet" Role="FromRole_HeaderToRoute"/>
+                    <End EntitySet="CarrierResponseRouteSet" Role="ToRole_HeaderToRoute"/>
                 </AssociationSet>
                 <AssociationSet Name="assoc_F7B62B4E95F89F43FA1A61C0F1D27BA4" Association="ZPSLE_BFC_VENDOR_PORTAL_SRV.assoc_F7B62B4E95F89F43FA1A61C0F1D27BA4" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
                     <End EntitySet="zpsle_vp_tr_item_c" Role="FromRole_assoc_F7B62B4E95F89F43FA1A61C0F1D27BA4"/>
                     <End EntitySet="zpsle_fc_vh_mat_c" Role="ToRole_assoc_F7B62B4E95F89F43FA1A61C0F1D27BA4"/>
                 </AssociationSet>
             </EntityContainer>
+            <Annotations Target="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_item_cType/Material"
+                xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Material Value Help"/>
+                        <PropertyValue Property="CollectionPath" String="zpsle_fc_vh_mat_c"/>
+                        <PropertyValue Property="SearchSupported" Bool="true"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Material"/>
+                                    <PropertyValue Property="ValueListProperty" String="Material"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="MaterialDesc"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="MaterialType"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="MaterialGroup"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_item_cType/QuantityUom"
+                xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Gross Weight UoM Value Help"/>
+                        <PropertyValue Property="CollectionPath" String="zpsle_fc_vh_um_qt_c"/>
+                        <PropertyValue Property="SearchSupported" Bool="true"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="QuantityUom"/>
+                                    <PropertyValue Property="ValueListProperty" String="Uom"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="UomDesc"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_item_cType/GrossWeightUom"
+                xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Gross Weight UoM Value Help"/>
+                        <PropertyValue Property="CollectionPath" String="zpsle_fc_vh_um_gw_c"/>
+                        <PropertyValue Property="SearchSupported" Bool="true"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="GrossWeightUom"/>
+                                    <PropertyValue Property="ValueListProperty" String="Uom"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="UomDesc"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
             <Annotations Target="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_header_cType/Carrier"
                 xmlns="http://docs.oasis-open.org/odata/ns/edm">
                 <Annotation Term="Common.ValueList">
@@ -383,75 +640,6 @@
                                 </Record>
                                 <Record Type="Common.ValueListParameterDisplayOnly">
                                     <PropertyValue Property="ValueListProperty" String="StatusDescription"/>
-                                </Record>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_item_cType/Material"
-                xmlns="http://docs.oasis-open.org/odata/ns/edm">
-                <Annotation Term="Common.ValueList">
-                    <Record>
-                        <PropertyValue Property="Label" String="Material Value Help"/>
-                        <PropertyValue Property="CollectionPath" String="zpsle_fc_vh_mat_c"/>
-                        <PropertyValue Property="SearchSupported" Bool="true"/>
-                        <PropertyValue Property="Parameters">
-                            <Collection>
-                                <Record Type="Common.ValueListParameterInOut">
-                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Material"/>
-                                    <PropertyValue Property="ValueListProperty" String="Material"/>
-                                </Record>
-                                <Record Type="Common.ValueListParameterDisplayOnly">
-                                    <PropertyValue Property="ValueListProperty" String="MaterialDesc"/>
-                                </Record>
-                                <Record Type="Common.ValueListParameterDisplayOnly">
-                                    <PropertyValue Property="ValueListProperty" String="MaterialType"/>
-                                </Record>
-                                <Record Type="Common.ValueListParameterDisplayOnly">
-                                    <PropertyValue Property="ValueListProperty" String="MaterialGroup"/>
-                                </Record>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_item_cType/QuantityUom"
-                xmlns="http://docs.oasis-open.org/odata/ns/edm">
-                <Annotation Term="Common.ValueList">
-                    <Record>
-                        <PropertyValue Property="Label" String="Gross Weight UoM Value Help"/>
-                        <PropertyValue Property="CollectionPath" String="zpsle_fc_vh_um_qt_c"/>
-                        <PropertyValue Property="SearchSupported" Bool="true"/>
-                        <PropertyValue Property="Parameters">
-                            <Collection>
-                                <Record Type="Common.ValueListParameterInOut">
-                                    <PropertyValue Property="LocalDataProperty" PropertyPath="QuantityUom"/>
-                                    <PropertyValue Property="ValueListProperty" String="Uom"/>
-                                </Record>
-                                <Record Type="Common.ValueListParameterDisplayOnly">
-                                    <PropertyValue Property="ValueListProperty" String="UomDesc"/>
-                                </Record>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="ZPSLE_BFC_VENDOR_PORTAL_SRV.zpsle_vp_tr_item_cType/GrossWeightUom"
-                xmlns="http://docs.oasis-open.org/odata/ns/edm">
-                <Annotation Term="Common.ValueList">
-                    <Record>
-                        <PropertyValue Property="Label" String="Gross Weight UoM Value Help"/>
-                        <PropertyValue Property="CollectionPath" String="zpsle_fc_vh_um_gw_c"/>
-                        <PropertyValue Property="SearchSupported" Bool="true"/>
-                        <PropertyValue Property="Parameters">
-                            <Collection>
-                                <Record Type="Common.ValueListParameterInOut">
-                                    <PropertyValue Property="LocalDataProperty" PropertyPath="GrossWeightUom"/>
-                                    <PropertyValue Property="ValueListProperty" String="Uom"/>
-                                </Record>
-                                <Record Type="Common.ValueListParameterDisplayOnly">
-                                    <PropertyValue Property="ValueListProperty" String="UomDesc"/>
                                 </Record>
                             </Collection>
                         </PropertyValue>

@@ -2,6 +2,7 @@ const cds = require('@sap/cds');
 const { json } = require('@sap/cds/lib/compile/parse');
 const { UUID } = require('@sap/cds/lib/core/classes');
 const { executeHttpRequest } = require("@sap-cloud-sdk/http-client");
+const { response } = require('express');
 
 class ProcessorService extends cds.ApplicationService {
   init() {
@@ -10,7 +11,7 @@ class ProcessorService extends cds.ApplicationService {
     this.before('CREATE', 'CarrierFleet.drafts', req => appHandler.beforeCreateCarrierFleet(req));
     this.before('UPDATE', 'CarrierFleet.drafts', req => appHandler.beforeUpdateCarrierFleet(req));
     this.before('READ', 'TransportRequisition', req => appHandler.beforeReadTransportRequisition(req));
-    //this.on('startReply', 'TransportRequisition', req => appHandler.startReply(req));
+    this.after('READ', 'TransportRequisition', req => appHandler.onAfterTransportRequisition(req));
     this.on('acceptTr', 'TransportRequisition', req => appHandler.setTrAccepted(req));
     this.on('rejectTr', 'TransportRequisition', req => appHandler.setTrRejected(req));
     this.on('confirmTrDelivery', 'TransportRequisition', req => appHandler.setTrDeliveryConfirmed(req));
@@ -24,20 +25,51 @@ class AppHandler {
     this.service = service;
     this.appData = new AppData(service);
     this.appValidation = new AppValidation(service);
-
-    //this.S4bupa = this.connectToS4bupa();
-    //this.remoteService = this.connectToremoteService();
   }
 
   async connectToS4bupa() {
-    return cds.connect.to('ZPSLE_BFC_VENDOR_PORTAL_SRV');
+    this.S4bupa = await cds.connect.to('ZPSLE_BFC_VENDOR_PORTAL_SRV');
+    return this.S4bupa;
   }
 
   async connectToremoteService() {
-    return cds.connect.to('ExternalProcessorService');
+    this.remoteService = await cds.connect.to('ExternalProcessorService');
+    return this.remoteService;
+  }
+
+  async onAfterTransportRequisition(trs) {
+    console.log("TRS value: " + JSON.stringify(trs));
+    if (!trs || trs.length === 0) return;
+
+    // Removed the unnecessary commented-out line
+    //this.connectToExternalService();
+    const externalSrv = await this.connectToS4bupa();
+
+    const cargoTypes = [...new Set(trs.map(tr => tr.CargoType).filter(Boolean))];
+
+    if (cargoTypes.length > 0) {
+      // Fetch CargoType descriptions from the external service
+      const cargoTypeDescriptions = await externalSrv.run(
+        SELECT.from('zpsle_fc_vh_ctyp_c').where({ CargoType: cargoTypes })
+      );
+
+      // Map CargoType -> CargoTypeDesc
+      const cargoTypeMap = Object.fromEntries(
+        cargoTypeDescriptions.map(ct => [ct.CargoType, ct.CargoTypeDesc])
+      );
+
+      // Enrich TransportRequisition with CargoTypeDesc
+      trs.forEach(tr => {
+        if (tr.CargoType && cargoTypeMap[tr.CargoType]) {
+          tr._CargoType = { CargoType: tr.CargoType, CargoTypeDesc: cargoTypeMap[tr.CargoType] };
+        }
+      });
+    }
+
   }
 
   async beforeReadTransportRequisition(req) {
+    await this.appData.syncTransportRequisitions(req, this);
     await this.appData.initializeCarrierResponse(req, this);
   }
 
@@ -71,19 +103,6 @@ class AppHandler {
 
   async setTrDeliveryConfirmed(req) {
 
-    /* TEST CONNECTION ******************************************************** */
-
-    this.S4bupa = await this.connectToS4bupa();
-    this.remoteService = await this.connectToremoteService();
-
-    console.log("Passando pelo TESTE GET");
-    const { ExternalTranspRequisition } = this.remoteService.entities;
-    console.log("TESTE ExternalTranspRequisition: " + JSON.stringify(ExternalTranspRequisition));
-    const TranspReq = await this.S4bupa.run(SELECT.one().from(ExternalTranspRequisition).where({ Trnum: '1000000001' }));
-    console.log("RESULT TranspReq: " + JSON.stringify(TranspReq));
-
-    /* TEST CONNECTION ******************************************************** */
-
   }
 }
 
@@ -91,6 +110,89 @@ class AppData {
 
   constructor(service) {
     this.service = service;
+  }
+
+  async syncTransportRequisitions(req, that) {
+
+    const remoteService = await that.connectToremoteService();
+    const bupa = await that.connectToS4bupa();
+
+    console.log("bupa: " + JSON.stringify(bupa));
+    console.log("remoteService: " + JSON.stringify(remoteService));
+
+    const { ExtTransportRequisition, ExtTrHeader, ExtTrItem, ExtTrStatus } = remoteService.entities;
+
+    const { TransportRequisition, zpsle_tr_h_t, zpsle_tr_i_t, zpsle_tr_s_t } = that.service.entities;
+
+    const tx = cds.transaction(req);
+
+    console.log("Pós atribuição ExternalTransportRequisition: " + ExtTransportRequisition);
+
+    const TranspReq = await tx.run(
+      SELECT.one.from(TransportRequisition)
+        .columns('Trnum', 'Status', 'SubmittedAt')
+        .where({
+          Status: AppConstants.STATUS_PENDING_OF_APPROVAL
+        })
+        .limit(1)
+        .orderBy({ SubmittedAt: 'desc' })
+    );
+
+    console.log("AQUI TranspReq: " + JSON.stringify(TranspReq));
+
+    const cutTimestamp = "2022-01-01T00:00:00Z";
+    let SubmittedAt = cutTimestamp;
+
+    if (typeof TranspReq !== "undefined") {
+      SubmittedAt = TranspReq.SubmittedAt;
+    }
+
+    console.log("AQUI SubmittedAt: " + SubmittedAt);
+
+    const TransportRequisitions = await bupa.run(
+      SELECT.from(ExtTransportRequisition)
+        .columns('Trnum', 'SentToCarrierTimestamp')
+        .where({
+          SentToCarrierTimestamp: { '>': SubmittedAt },
+          Status: AppConstants.STATUS_PENDING_OF_APPROVAL
+        })
+        .orderBy({ SentToCarrierTimestamp: 'desc' })
+    );
+    console.log("New Trs: " + JSON.stringify(TransportRequisitions));
+
+    if (TransportRequisitions.length > 0) {
+
+      for (const req of TransportRequisitions) {
+
+        const TrHeader = await bupa.run(
+          SELECT.one.from(ExtTrHeader)
+            .columns('*')
+            .where({ trnum: req.Trnum })
+        );
+
+        const TrStatus = await bupa.run(
+          SELECT.from(ExtTrStatus)
+            .columns('*')
+            .where({ trnum: req.Trnum })
+        );
+
+        const TrItems = await bupa.run(
+          SELECT.from(ExtTrItem)
+            .columns('*')
+            .where({ trnum: req.Trnum })
+        );
+
+        //console.log("NEW TRHEADER: " + JSON.stringify(TrHeader));
+        //console.log("NEW TRSTATUS: " + JSON.stringify(TrStatus));
+        //console.log("NEW TRITEMS: " + JSON.stringify(TrItems));
+
+        await tx.run(INSERT.into(zpsle_tr_h_t).entries(TrHeader));
+        await tx.run(INSERT.into(zpsle_tr_s_t).entries(TrStatus));
+        await tx.run(INSERT.into(zpsle_tr_i_t).entries(TrItems));
+
+      }
+    }
+
   }
 
   async initializeCarrierResponse(req, that) {
@@ -139,6 +241,8 @@ class AppData {
   }
 
   async initializeCarrierHeader(req, that) {
+    console.log("Passing by initializeCarrierHeader");
+    console.log("req.data.Trnum value: " + req.data.Trnum);
     if (typeof req.data.Trnum !== "undefined") {
       const tx = cds.transaction(req);
       const { CarrierHeader, TrCurrentStatus, zpsle_tr_ch_t } = that.service.entities;
@@ -147,16 +251,20 @@ class AppData {
           .from(CarrierHeader)
           .where({ Trnum: req.data.Trnum })
       )
+      console.log("Return of carrierHeader select: " + JSON.stringify(carrierHeader));
+      console.log("carrierHeader.length value: " + carrierHeader.length);
       if (carrierHeader.length === 0) {
         const currentStatus = await tx.run(
           SELECT.one().from(TrCurrentStatus)
             .where({ Trnum: req.data.Trnum })
         )
+        console.log("Return of currentStatus select: " + JSON.stringify(currentStatus));
         if (currentStatus.Status === AppConstants.STATUS_PENDING_OF_APPROVAL) {
           const initialCarrierHeader = {
             ID: cds.utils.uuid(),
             TRNUM: req.data.Trnum
           };
+          console.log("Return of initialCarrierHeader select: " + JSON.stringify(initialCarrierHeader));
           await tx.run(INSERT.into(zpsle_tr_ch_t).entries(initialCarrierHeader));
         }
       }

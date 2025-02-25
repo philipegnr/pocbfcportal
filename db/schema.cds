@@ -62,10 +62,10 @@ entity TransportRequisition       as
             @readonly
             CarrierDefinedBy,
             @readonly
-            EbeNumber,
+            Ebenumber,
             @readonly
             TravelNumber,
-            _Status.Status,
+            _Status.Status as Status,
             _Status._StatusDetail.TrUpdateHidden,
             _Status._StatusDetail.TrAcceptActionHidden,
             _Status._StatusDetail.TrRejectActionHidden,
@@ -83,7 +83,7 @@ entity TransportRequisition       as
             //_TransportRequisitionStatusHistory,
             _DeparturePoint,
             _DestinationPoint,
-            _CargoType,
+            //_CargoType,
             _TransportRequisitionItems,
             _CarrierHeader,
             _CarrierRoute,
@@ -92,36 +92,36 @@ entity TransportRequisition       as
 
 entity TransportRequisitionHeader as
     select from zpsle_tr_h_t as Header {
-        key Header.TRNUM          as Trnum,
-            TRTYP                 as Trtyp,
-            CARRIER               as Carrier,
-            SEGMENT               as Segment,
-            PROJECT               as Project,
-            WBS                   as Wbs,
-            CARGO_TYPE            as CargoType,
-            COMPANY               as Company,
-            PLANT                 as Plant,
-            DEPARTURE_POINT       as DeparturePoint,
-            DESTINATION_POINT     as DestinationPoint,
-            DEPARTURE_ADDRESS     as DepartureAddress,
-            DESTINATION_ADDRESS   as DestinationAddress,
-            REQUESTED_FOR         as RequestedFor,
-            COLLECTION_TIMESTAMP  as CollectionTimestamp,
-            DELIVERY_TIMESTAMP    as DeliveryTimestamp,
-            OBSERVAT              as Observat,
-            AUTOMATICALLY_CREATED as AutomaticallyCreated,
-            TRCOP                 as Trcop,
-            TRCOP_NEW_CARRIER     as TrcopNewCarrier,
-            CREATION_USER         as CreationUser,
-            CREATION_TIMESTAMP    as CreationTimestamp,
-            LAST_MODIF_USER       as LastModifUser,
-            LAST_MODIF_TIMESTAMP  as LastModifTimestamp,
-            DRAFT                 as Draft,
-            WBS_INTERNAL          as WbsInternal,
-            CANCELED_WITH_COSTS   as CanceledWithCosts,
-            CARRIER_DEFINED_BY    as CarrierDefinedBy,
-            EBENUMBER             as EbeNumber,
-            TRAVEL_NUMBER         as TravelNumber,
+        key Header.trnum          as Trnum,
+            trtyp                 as Trtyp,
+            carrier               as Carrier,
+            segment               as Segment,
+            project               as Project,
+            wbs                   as Wbs,
+            cargo_type            as CargoType,
+            company               as Company,
+            plant                 as Plant,
+            departure_point       as DeparturePoint,
+            destination_point     as DestinationPoint,
+            departure_address     as DepartureAddress,
+            destination_address   as DestinationAddress,
+            requested_for         as RequestedFor,
+            collection_timestamp  as CollectionTimestamp,
+            delivery_timestamp    as DeliveryTimestamp,
+            observat              as Observat,
+            automatically_created as AutomaticallyCreated,
+            trcop                 as Trcop,
+            trcop_new_carrier     as TrcopNewCarrier,
+            creation_user         as CreationUser,
+            creation_timestamp    as CreationTimestamp,
+            last_modif_user       as LastModifUser,
+            last_modif_timestamp  as LastModifTimestamp,
+            draft                 as Draft,
+            wbs_internal          as WbsInternal,
+            canceled_with_costs   as CanceledWithCosts,
+            carrier_defined_by    as CarrierDefinedBy,
+            ebenumber             as Ebenumber,
+            travel_number         as TravelNumber,
             _Status                    : Association to one TrCurrentStatus on _Status.Trnum = $self.Trnum,
             _CreationStatus            : Association to one TrCreationStatus on _CreationStatus.Trnum = $self.Trnum,
             _SubmitStatus              : Association to one TrSubmitStatus on _SubmitStatus.Trnum = $self.Trnum,
@@ -131,56 +131,56 @@ entity TransportRequisitionHeader as
             _CarrierRoute              : Composition of many CarrierRoute on _CarrierRoute.Trnum = Trnum,
             _CarrierFleet              : Composition of many CarrierFleet on _CarrierFleet.Trnum = Trnum,
             _DeparturePoint            : Association to one Point on _DeparturePoint.Point = $self.DeparturePoint,
-            _DestinationPoint          : Association to one Point on _DestinationPoint.Point = $self.DestinationPoint,
-            _CargoType                 : Association to one CargoType on _CargoType.CargoType = $self.CargoType
+            _DestinationPoint          : Association to one Point on _DestinationPoint.Point = $self.DestinationPoint
+    //_CargoType                 : Association to one CargoType on _CargoType.CargoType = $self.CargoType
     }
 
 entity TransportRequisitionItem   as
     select from zpsle_tr_i_t {
-        key TRNUM                as Trnum,
-        key TRITEM               as Tritem,
-            MATERIAL             as Material,
-            MATERIAL_DESC        as MaterialDesc,
+        key trnum                as Trnum,
+        key tritem               as Tritem,
+            material             as Material,
+            material_desc        as MaterialDesc,
             @Measures.ISOCurrency: QuantityUom
-            QUANTITY             as Quantity,
-            QUANTITY_UOM         as QuantityUom,
+            quantity             as Quantity,
+            quantity_uom         as QuantityUom,
             @Measures.ISOCurrency: GrossWeightUom
-            GROSS_WEIGHT         as GrossWeight,
-            GROSS_WEIGHT_UOM     as GrossWeightUom,
+            gross_weight         as GrossWeight,
+            gross_weight_uom     as GrossWeightUom,
             @Measures.ISOCurrency: GrossWeightUom
-            TOTAL_GROSS_WEIGHT   as TotalGrossWeight,
+            total_gross_weight   as TotalGrossWeight,
             @Measures.ISOCurrency: DimensionsUom
-            LENGHT               as Lenght,
+            lenght               as Lenght,
             @Measures.ISOCurrency: DimensionsUom
-            WIDTH                as Width,
+            width                as Width,
             @Measures.ISOCurrency: DimensionsUom
-            HEIGHT               as Height,
-            DIMENSIONS_UOM       as DimensionsUom,
+            height               as Height,
+            dimensions_uom       as DimensionsUom,
             @Measures.ISOCurrency: TotalDimensionsUom
-            TOTAL_DIMENSIONS     as TotalDimensions,
-            TOTAL_DIMENSIONS_UOM as TotalDimensionsUom,
-            DANGEROUS            as Dangerous,
+            total_dimensions     as TotalDimensions,
+            total_dimensions_uom as TotalDimensionsUom,
+            dangerous            as Dangerous,
             @Measures.ISOCurrency: PriceCurrency
-            PRICE                as Price,
-            PRICE_CURRENCY       as PriceCurrency,
+            price                as Price,
+            price_currency       as PriceCurrency,
             @Measures.ISOCurrency: PriceCurrency
-            TOTAL_PRICE          as TotalPrice,
-            CANCEL               as Cancel,
-            CREATION_USER        as CreationUser,
-            CREATION_TIMESTAMP   as CreationTimestamp,
-            LAST_MODIF_USER      as LastModifUser,
-            LAST_MODIF_TIMESTAMP as LastModifTimestamp,
-            DRAFT                as Draft
+            total_price          as TotalPrice,
+            cancel               as Cancel,
+            creation_user        as CreationUser,
+            creation_timestamp   as CreationTimestamp,
+            last_modif_user      as LastModifUser,
+            last_modif_timestamp as LastModifTimestamp,
+            draft                as Draft
     }
 
 entity TransportRequisitionStatus as
     select from zpsle_tr_s_t {
-        key TRNUM       as Trnum,
-        key SEQ         as Seq,
-            STATUS      as Status,
-            REASON_TEXT as ReasonText,
-            USER_ID     as UserId,
-            TIMESTAMP   as Timestamp,
+        key trnum       as Trnum,
+        key seq         as Seq,
+            status      as Status,
+            reason_text as ReasonText,
+            user_id     as UserId,
+            timestamp   as Timestamp,
     }
 
 entity Point                      as
@@ -191,11 +191,11 @@ entity Point                      as
             REGIO as State
     }
 
-entity CargoType                  as
+/* entity CargoType                  as
     select from zpsle_fc_ctyp_t {
         key CARGO_TYPE      as CargoType,
             CARGO_TYPE_DESC as CargoTypeDescription
-    }
+    } */
 
 entity Status                     as
     select from zpsle_fc_stat_t {
@@ -333,8 +333,8 @@ entity CarrierFleet               as
 
 entity VehicleType                as
     select from zpsle_fc_vt_t {
-        key VEHICLE_TYPE             as VehicleType,
-            VEHICLE_DESC             as VehicleDesc
+        key VEHICLE_TYPE as VehicleType,
+            VEHICLE_DESC as VehicleDesc
     }
 
 /********************************************************************************
@@ -408,73 +408,73 @@ entity TrSubmitStatus             as
  On-premise replicated tables
 /********************************************************************************/
 entity zpsle_tr_h_t {
-    key TRNUM                 : String(10);
-        TRTYP                 : String(1);
-        CARRIER               : String(10);
-        SEGMENT               : String(4);
-        PROJECT               : String(10);
-        WBS                   : String(24);
-        CARGO_TYPE            : String(2);
-        COMPANY               : String(4);
-        PLANT                 : String(4);
-        DEPARTURE_POINT       : String(10);
-        DESTINATION_POINT     : String(10);
-        DEPARTURE_ADDRESS     : String(200);
-        DESTINATION_ADDRESS   : String(200);
-        REQUESTED_FOR         : String(30);
-        COLLECTION_TIMESTAMP  : Timestamp;
-        DELIVERY_TIMESTAMP    : Timestamp;
-        OBSERVAT              : String(1000);
-        AUTOMATICALLY_CREATED : Boolean;
-        TRCOP                 : String(10);
-        TRCOP_NEW_CARRIER     : Boolean;
-        CREATION_USER         : String(12);
-        CREATION_TIMESTAMP    : Timestamp;
-        LAST_MODIF_USER       : String(12);
-        LAST_MODIF_TIMESTAMP  : Timestamp;
-        DRAFT                 : Boolean;
-        WBS_INTERNAL          : String(8);
-        CANCELED_WITH_COSTS   : Boolean;
-        CARRIER_DEFINED_BY    : String(4);
-        EBENUMBER             : String(50);
-        TRAVEL_NUMBER         : String(10);
+    key trnum                 : String(10);
+        trtyp                 : String(1);
+        carrier               : String(10);
+        segment               : String(4);
+        project               : String(10);
+        wbs                   : String(24);
+        cargo_type            : String(2);
+        company               : String(4);
+        plant                 : String(4);
+        departure_point       : String(10);
+        destination_point     : String(10);
+        departure_address     : String(200);
+        destination_address   : String(200);
+        requested_for         : String(30);
+        collection_timestamp  : Timestamp;
+        delivery_timestamp    : Timestamp;
+        observat              : String(1000);
+        automatically_created : Boolean;
+        trcop                 : String(10);
+        trcop_new_carrier     : Boolean;
+        creation_user         : String(12);
+        creation_timestamp    : Timestamp;
+        last_modif_user       : String(12);
+        last_modif_timestamp  : Timestamp;
+        draft                 : Boolean;
+        wbs_internal          : String(24);
+        canceled_with_costs   : Boolean;
+        carrier_defined_by    : String(4);
+        ebenumber             : String(50);
+        travel_number         : String(10);
 }
 
 entity zpsle_tr_i_t {
-    key TRNUM                : String(10);
-    key TRITEM               : String(5);
-        MATERIAL             : String(18);
-        MATERIAL_DESC        : String(40);
-        QUANTITY             : Decimal(13, 3);
-        QUANTITY_UOM         : String(3);
-        GROSS_WEIGHT         : Decimal(15, 3);
-        GROSS_WEIGHT_UOM     : String(3);
-        TOTAL_GROSS_WEIGHT   : Decimal(15, 3);
-        LENGHT               : Decimal(13, 3);
-        WIDTH                : Decimal(13, 3);
-        HEIGHT               : Decimal(13, 3);
-        DIMENSIONS_UOM       : String(3);
-        TOTAL_DIMENSIONS     : Decimal(13, 3);
-        TOTAL_DIMENSIONS_UOM : String(3);
-        DANGEROUS            : Boolean;
-        PRICE                : Decimal(13, 2);
-        PRICE_CURRENCY       : String(5);
-        TOTAL_PRICE          : Decimal(13, 2);
-        CANCEL               : Boolean;
-        CREATION_USER        : String(12);
-        CREATION_TIMESTAMP   : Timestamp;
-        LAST_MODIF_USER      : String(12);
-        LAST_MODIF_TIMESTAMP : Timestamp;
-        DRAFT                : Boolean
+    key trnum                : String(10);
+    key tritem               : String(5);
+        material             : String(18);
+        material_desc        : String(40);
+        quantity             : Decimal(13, 3);
+        quantity_uom         : String(3);
+        gross_weight         : Decimal(15, 3);
+        gross_weight_uom     : String(3);
+        total_gross_weight   : Decimal(15, 3);
+        lenght               : Decimal(13, 3);
+        width                : Decimal(13, 3);
+        height               : Decimal(13, 3);
+        dimensions_uom       : String(3);
+        total_dimensions     : Decimal(13, 3);
+        total_dimensions_uom : String(3);
+        dangerous            : Boolean;
+        price                : Decimal(13, 2);
+        price_currency       : String(5);
+        total_price          : Decimal(13, 2);
+        cancel               : Boolean;
+        creation_user        : String(12);
+        creation_timestamp   : Timestamp;
+        last_modif_user      : String(12);
+        last_modif_timestamp : Timestamp;
+        draft                : Boolean
 }
 
 entity zpsle_tr_s_t {
-    key TRNUM       : String(10);
-    key SEQ         : Integer;
-        STATUS      : String(10);
-        REASON_TEXT : String(120);
-        USER_ID     : String(12);
-        TIMESTAMP   : Timestamp;
+    key trnum       : String(10);
+    key seq         : Integer;
+        status      : String(10);
+        reason_text : String(120);
+        user_id     : String(12);
+        timestamp   : Timestamp;
 }
 
 entity zpsle_fc_cp_t {
@@ -495,8 +495,8 @@ entity zpsle_fc_stat_t {
 }
 
 entity zpsle_fc_vt_t {
-    key VEHICLE_TYPE             : String(10);
-        VEHICLE_DESC             : String(50);
+    key VEHICLE_TYPE : String(10);
+        VEHICLE_DESC : String(50);
 }
 
 entity zpsle_tr_ch_t {

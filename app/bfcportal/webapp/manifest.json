@@ -12,12 +12,12 @@
     "resources": "resources.json",
     "sourceTemplate": {
       "id": "@sap/generator-fiori:lrop",
-      "version": "1.15.7",
-      "toolsId": "4771a59b-62cf-4840-82c3-af28036c0c70"
+      "version": "1.16.4",
+      "toolsId": "c3b3976c-8699-427c-a33e-861d9972dc54"
     },
     "dataSources": {
       "mainService": {
-        "uri": "odata/v4/processor/",
+        "uri": "/odata/v4/processor/",
         "type": "OData",
         "settings": {
           "annotations": [],
@@ -27,9 +27,10 @@
     },
     "crossNavigation": {
       "inbounds": {
-        "bfcportal-display": {
-          "semanticObject": "bfcportal",
+        "TransportRequisition-display": {
+          "semanticObject": "TransportRequisition",
           "action": "display",
+          "title": "{{TransportRequisition-display.flpTitle}}",
           "signature": {
             "parameters": {},
             "additionalParameters": "allowed"
@@ -57,7 +58,7 @@
   "sap.ui5": {
     "flexEnabled": true,
     "dependencies": {
-      "minUI5Version": "1.131.1",
+      "minUI5Version": "1.133.0",
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},
@@ -106,7 +107,7 @@
           "target": "TransportRequisitionObjectPage"
         },
         {
-          "pattern": "TransportRequisition({key})/transportRequisitionItem({key2}):?query:",
+          "pattern": "TransportRequisition({key})/_TransportRequisitionItems({key2}):?query:",
           "name": "TransportRequisitionItemObjectPage",
           "target": "TransportRequisitionItemObjectPage"
         }
@@ -118,7 +119,6 @@
           "name": "sap.fe.templates.ListReport",
           "options": {
             "settings": {
-              "initialLoad": "Enabled",
               "contextPath": "/TransportRequisition",
               "variantManagement": "Page",
               "navigation": {
@@ -131,8 +131,7 @@
               "controlConfiguration": {
                 "@com.sap.vocabularies.UI.v1.LineItem": {
                   "tableSettings": {
-                    "type": "ResponsiveTable",
-                    "selectionMode": "Single"
+                    "type": "ResponsiveTable"
                   }
                 }
               }
@@ -148,7 +147,7 @@
               "editableHeaderContent": false,
               "contextPath": "/TransportRequisition",
               "navigation": {
-                "transportRequisitionItem": {
+                "_TransportRequisitionItems": {
                   "detail": {
                     "route": "TransportRequisitionItemObjectPage"
                   }
@@ -164,17 +163,8 @@
           "options": {
             "settings": {
               "editableHeaderContent": false,
-              "contextPath": "/TransportRequisition/transportRequisitionItem"
+              "contextPath": "/TransportRequisition/_TransportRequisitionItems"
             }
-          }
-        }
-      }
-    },
-    "extends": {
-      "extensions": {
-        "sap.ui.controllerExtensions": {
-          "sap.fe.templates.ObjectPage.ObjectPageController#bfc.bfcportal::TransportRequisitionObjectPage": {
-            "controllerName": "bfc.bfcportal.ext.controller.TransportRequisitionObjectPage"
           }
         }
       }
@@ -186,6 +176,6 @@
   },
   "sap.cloud": {
     "public": true,
-    "service": "bfcportal"
+    "service": "pocbfcportalcap.service"
   }
 }

@@ -1,2 +1,3 @@
-Trnum,Carrier,Segment,CargoType,CargoTypeDesc,DeparturePoint,DeparturePointDesc,DestinationPoint,DestinationPointDesc,DepartureAddress,DestinationAddress,CollectionTimestamp,DeliveryTimestamp,CreationTimestamp,Status,StatusDesc,StatusState,NodeState
-1000000001,,,,,,,,,,,,,,,,,
+Trnum,Carrier,Segment,CargoType,CargoTypeDesc,DeparturePoint,DeparturePointDesc,DestinationPoint,DestinationPointDesc,DepartureAddress,DestinationAddress,CollectionTimestamp,DeliveryTimestamp,CreationTimestamp,SentToCarrierTimestamp,Status,StatusDesc,StatusState,NodeState
+1000000085,,,CX,Caixa,,,,,,,,,,2022-01-18T12:38:56Z,CAR_VAL,,,
+1000000209,,,CX,Caixa,,,,,,,,,,2022-07-04T15:18:56Z,CAR_VAL,,,

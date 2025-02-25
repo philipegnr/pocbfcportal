@@ -1,9 +1,9 @@
 ## Application Details
 |               |
 | ------------- |
-|**Generation Date and Time**<br>Fri Dec 13 2024 15:26:46 GMT+0000 (Coordinated Universal Time)|
+|**Generation Date and Time**<br>Fri Feb 21 2025 13:50:09 GMT+0000 (Coordinated Universal Time)|
 |**App Generator**<br>@sap/generator-fiori-elements|
-|**App Generator Version**<br>1.15.7|
+|**App Generator Version**<br>1.16.4|
 |**Generation Platform**<br>SAP Business Application Studio|
 |**Template Used**<br>List Report Page V4|
 |**Service Type**<br>Local Cap|
@@ -12,16 +12,16 @@
 |**Application Title**<br>BFC Vendor Portal|
 |**Namespace**<br>bfc|
 |**UI5 Theme**<br>sap_horizon|
-|**UI5 Version**<br>1.131.1|
+|**UI5 Version**<br>1.133.0|
 |**Enable Code Assist Libraries**<br>False|
 |**Enable TypeScript**<br>False|
 |**Add Eslint configuration**<br>False|
 |**Main Entity**<br>TransportRequisition|
-|**Navigation Entity**<br>transportRequisitionItem|
+|**Navigation Entity**<br>_TransportRequisitionItems|
 
 ## bfcportal
 
-An SAP Fiori application.
+
 
 ### Starting the generated app
 

@@ -16,7 +16,7 @@ annotate service.TransportRequisition with @(UI.UpdateHidden: TrUpdateHidden);
 annotate service.TransportRequisition with {
     DeparturePoint    @Common.Text: _DeparturePoint.PointDescription         @Common.TextArrangement: #TextOnly;
     DestinationPoint  @Common.Text: _DestinationPoint.PointDescription       @Common.TextArrangement: #TextOnly;
-    CargoType         @Common.Text: _CargoType.CargoTypeDescription          @Common.TextArrangement: #TextOnly;
+    CargoType         @Common.Text: _CargoType.CargoTypeDesc                 @Common.TextArrangement: #TextOnly;
     Status            @Common.Text: _Status._StatusDetail.StatusDescription  @(
         Common.TextArrangement: #TextOnly,
         Common.Label          : 'Status',
@@ -132,26 +132,6 @@ annotate service.TransportRequisition with @(
         },
         {
             $Type: 'UI.DataField',
-            Value: CreatedAt,
-            Label: '{i18n>FieldLabelCreatedAt}',
-        },
-        {
-            $Type: 'UI.DataField',
-            Value: CreatedBy,
-            Label: '{i18n>FieldLabelCreatedBy}',
-        },
-        {
-            $Type: 'UI.DataField',
-            Value: SubmittedAt,
-            Label: '{i18n>FieldLabelSubmittedAt}',
-        },
-        {
-            $Type: 'UI.DataField',
-            Value: SubmittedBy,
-            Label: '{i18n>FieldLabelSubmittedBy}',
-        },
-        {
-            $Type: 'UI.DataField',
             Value: CollectionTimestamp,
             Label: '{i18n>FieldLabelCollectionTimestamp}',
         },
@@ -159,6 +139,11 @@ annotate service.TransportRequisition with @(
             $Type: 'UI.DataField',
             Value: DeliveryTimestamp,
             Label: '{i18n>FieldLabelDeliveryTimestamp}',
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: SubmittedAt,
+            Label: '{i18n>FieldLabelSentToCarrierTimestamp}',
         },
     ]
 
@@ -279,26 +264,6 @@ annotate service.TransportRequisition with @(
             },
             {
                 $Type: 'UI.DataField',
-                Value: CreatedBy,
-                Label: '{i18n>FieldLabelCreatedBy}',
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: CreatedAt,
-                Label: '{i18n>FieldLabelCreatedAt}',
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: SubmittedBy,
-                Label: '{i18n>FieldLabelSubmittedBy}',
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: SubmittedAt,
-                Label: '{i18n>FieldLabelSubmittedAt}',
-            },
-            {
-                $Type: 'UI.DataField',
                 Value: CollectionTimestamp,
                 Label: '{i18n>FieldLabelCollectionTimestamp}',
             },
@@ -306,7 +271,13 @@ annotate service.TransportRequisition with @(
                 $Type: 'UI.DataField',
                 Value: DeliveryTimestamp,
                 Label: '{i18n>FieldLabelDeliveryTimestamp}',
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: SubmittedAt,
+                Label: '{i18n>FieldLabelSentToCarrierTimestamp}',
             }
+
 
         ],
     },

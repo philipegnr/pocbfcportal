@@ -1,0 +1,10 @@
+CargoType,CargoTypeDesc
+CO,Container
+CX,Caixas2
+EL,Eletrônico
+FR,Frágil
+OU,Outros
+OV,Oversize (Excedente - Custo do batedor necessário)
+PA,Carga Paletizada
+QU,Químico (30% de valor total da NF)
+TU,Tubos

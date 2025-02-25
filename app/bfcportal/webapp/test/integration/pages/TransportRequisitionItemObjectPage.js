@@ -10,7 +10,7 @@ sap.ui.define(['sap/fe/test/ObjectPage'], function(ObjectPage) {
         {
             appId: 'bfc.bfcportal',
             componentId: 'TransportRequisitionItemObjectPage',
-            contextPath: '/TransportRequisition/transportRequisitionItem'
+            contextPath: '/TransportRequisition/_TransportRequisitionItems'
         },
         CustomPageDefinitions
     );

@@ -1,0 +1,3 @@
+trnum,trtyp,carrier,segment,project,wbs,cargo_type,company,plant,departure_point,destination_point,departure_address,destination_address,requested_for,collection_timestamp,delivery_timestamp,observat,automatically_created,trcop,trcop_new_carrier,creation_user,creation_timestamp,last_modif_user,last_modif_timestamp,draft,wbs_internal,canceled_with_costs,carrier_defined_by,ebenumber,travel_number
+1000000085,1,0001225349,OPER,BMC-33,A.ACE,PA,,,AC1200054,AC1200054,teste1,teste2,,,,,,,,,,,,,,,,,
+1000000209,1,0001225349,OPER,BMC-33,A.ACE,PA,,,RJ3304557,RJ3305000,teste1,teste2,,,,,,,,,,,,,,,,,

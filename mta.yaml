@@ -11,7 +11,6 @@ build-parameters:
       commands:
         - npm ci
         - npx cds build --production
-        - mkdir -p resources  
 modules:
   - name: pocbfcportalcap-srv
     type: nodejs
@@ -27,10 +26,10 @@ modules:
         properties:
           srv-url: ${default-url}
     requires:
+      - name: pocbfcportalcap-connectivity
+      - name: pocbfcportalcap-destination
       - name: pocbfcportalcap-db
       - name: pocbfcportalcap-auth
-      - name: pocbfcportalcap-destination
-      - name: pocbfcportalcap-connectivity-service
 
   - name: pocbfcportalcap-db-deployer
     type: hdb
@@ -42,20 +41,20 @@ modules:
 
   - name: pocbfcportalcap-app-deployer
     type: com.sap.application.content
-    path: .
+    path: gen
     requires:
       - name: pocbfcportalcap-html5-repo-host
         parameters:
           content-target: true
     build-parameters:
-      build-result: resources/
+      build-result: app/
       requires:
-        - name: pocbfcportalcap
+        - name: pocbfcportalcapbfcportal
           artifacts:
             - bfcportal.zip
-          target-path: resources/
+          target-path: app/
 
-  - name: pocbfcportalcap
+  - name: pocbfcportalcapbfcportal
     type: html5
     path: app/bfcportal
     build-parameters:
@@ -100,25 +99,11 @@ modules:
               sap.cloud.service: pocbfcportalcap.service
 
 resources:
-  - name: pocbfcportalcap-db
-    type: com.sap.xs.hdi-container
-    parameters:
-      service: hana
-      service-plan: hdi-shared
-  - name: pocbfcportalcap-html5-repo-host
+  - name: pocbfcportalcap-connectivity
     type: org.cloudfoundry.managed-service
     parameters:
-      service: html5-apps-repo
-      service-plan: app-host
-  - name: pocbfcportalcap-auth
-    type: org.cloudfoundry.managed-service
-    parameters:
-      service: xsuaa
-      service-plan: application
-      path: ./xs-security.json
-      config:
-        xsappname: pocbfcportalcap-${org}-${space}
-        tenant-mode: dedicated
+      service: connectivity
+      service-plan: lite
   - name: pocbfcportalcap-destination
     type: org.cloudfoundry.managed-service
     parameters:
@@ -149,9 +134,22 @@ resources:
           name: srv-api # must be used in xs-app.json as well
           url: ~{srv-url}
           forwardAuthToken: true
-
-  - name: pocbfcportalcap-connectivity-service
+  - name: pocbfcportalcap-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+  - name: pocbfcportalcap-html5-repo-host
     type: org.cloudfoundry.managed-service
     parameters:
-      service-plan: lite
-      service: connectivity         
+      service: html5-apps-repo
+      service-plan: app-host
+  - name: pocbfcportalcap-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: pocbfcportalcap-${org}-${space}
+        tenant-mode: dedicated

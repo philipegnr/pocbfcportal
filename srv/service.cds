@@ -1,17 +1,7 @@
 using {sap.lcap.pocbfcportalcap as my} from '../db/schema';
 using {ZPSLE_BFC_VENDOR_PORTAL_SRV as externalMy} from './external/ZPSLE_BFC_VENDOR_PORTAL_SRV';
 
-@path: '/service/ExternalProcessorService'
-service ExternalProcessorService {
-    @readonly
-    entity ExternalTranspRequisition as projection on externalMy.zpsle_vp_tr_header_c;
-}
-
-annotate ExternalProcessorService with @requires: ['authenticated-user'];
-
 service ProcessorService {
-
-    //entity ExternalTrHeader as projection on external.zpsle_vp_tr_header_c;
 
     annotate ProcessorService.TransportRequisition with @odata.draft.enabled;
 
@@ -19,7 +9,6 @@ service ProcessorService {
         Capabilities.InsertRestrictions: {Insertable: false},
         Capabilities.DeleteRestrictions: {Deletable: false}
     );
-
 
     entity TransportRequisition       as projection on my.TransportRequisition
 
@@ -78,9 +67,33 @@ service ProcessorService {
     entity TrCurrentStatus            as projection on my.TrCurrentStatus;
     entity Point                      as projection on my.Point;
     entity VehicleType                as projection on my.VehicleType;
-    entity CargoType                  as projection on my.CargoType;
     entity Status                     as projection on my.Status;
+    entity CargoType                  as projection on externalMy.zpsle_fc_vh_ctyp_c;
+    entity TransportRequisitionStatus as projection on my.TransportRequisitionStatus;
+    entity zpsle_tr_h_t               as projection on my.zpsle_tr_h_t;
+    entity zpsle_tr_i_t               as projection on my.zpsle_tr_i_t;
     entity zpsle_tr_s_t               as projection on my.zpsle_tr_s_t;
     entity zpsle_tr_ch_t              as projection on my.zpsle_tr_ch_t;
 
+}
+
+@path: '/service/ExternalProcessorService'
+service ExternalProcessorService {
+    @readonly
+    entity ExtTransportRequisition as projection on externalMy.zpsle_vp_tr_header_c;
+
+    @readonly
+    entity ExtTrHeader             as projection on externalMy.zpsle_vp_tr_h_c;
+
+    @readonly
+    entity ExtTrItem               as projection on externalMy.zpsle_vp_tr_i_c;
+
+    @readonly
+    entity ExtTrStatus             as projection on externalMy.zpsle_vp_tr_s_c;
+}
+
+annotate ExternalProcessorService with @requires: ['authenticated-user'];
+
+extend projection ProcessorService.TransportRequisition with {
+    _CargoType : Association to one ProcessorService.CargoType on _CargoType.CargoType = CargoType
 }

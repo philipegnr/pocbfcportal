@@ -1,0 +1,5 @@
+trnum,tritem,material,material_desc,quantity,quantity_uom,gross_weight,gross_weight_uom,total_gross_weight,lenght,width,height,dimensions_uom,total_dimensions,total_dimensions_uom,dangerous,price,price_currency,total_price,cancel,creation_user,creation_timestamp,last_modif_user,last_modif_timestamp,draft
+1000000085,1,05415415,Teste 1,1,PC,,,,,,,,,,,2500,BRL,,,,,,,
+1000000085,2,05415416,Teste 2,1,PC,,,,,,,,,,,2500,BRL,,,,,,,
+1000000209,1,05415415,Teste 1,1,PC,,,,,,,,,,,2500,BRL,,,,,,,
+1000000209,2,05415416,Teste 2,1,PC,,,,,,,,,,,2500,BRL,,,,,,,
