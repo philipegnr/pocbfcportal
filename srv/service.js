@@ -209,11 +209,11 @@ class AppData {
     ) || { CurrentSequential: 0 };
     const newSequential = currentStatus.Seq + 1;
     const newStatusRecord = {
-      TRNUM: req.params[0].Trnum,
-      SEQ: newSequential,
-      STATUS: newStatus,
-      USER_ID: 'VENDOR',
-      TIMESTAMP: cds.context.timestamp
+      trnum: req.params[0].Trnum,
+      seq: newSequential,
+      status: newStatus,
+      user_id: 'VENDOR',
+      timestamp: cds.context.timestamp
     };
     console.log("New Status Record to be inserted: " + JSON.stringify(newStatusRecord));
     await tx.run(INSERT.into(zpsle_tr_s_t).entries(newStatusRecord));
